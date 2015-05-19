@@ -40,11 +40,15 @@ def get_views_amount(video_soup):
 
 
 def get_likes_amount(video_soup):
-    return -1
+    return "None"
 
 
 def get_video_link(video_soup):
     return "https://vk.com/video" + get_video_id(video_soup)
+
+
+def get_video_description(video_soup):
+    return "None"
 
 
 def parse_video(video_soup):
@@ -58,8 +62,9 @@ def parse_video(video_soup):
     views_amount = get_views_amount(video_soup)
     likes_amount = get_likes_amount(video_soup)
     video_link = get_video_link(video_soup)
+    video_description = get_video_description(video_soup)
 
-    video = Video(video_id, video_name, owner_id, owner_name, timestamp, publication_date, video_length, views_amount, likes_amount, video_link)
+    video = Video(video_id, video_name, owner_id, owner_name, timestamp, publication_date, video_length, views_amount, likes_amount, video_link, video_description)
     return video
 
 

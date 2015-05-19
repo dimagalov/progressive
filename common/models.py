@@ -4,7 +4,7 @@ __author__ = 'dimagalov'
 
 
 class Video:
-    def __init__(self, id="", name="", owner_id="", owner_name="", timestamp="", publication_date="", length="", views_amount=0, likes_amount=0, link=""):
+    def __init__(self, id="", name="", owner_id="", owner_name="", timestamp="", publication_date="", length="", views_amount="", likes_amount="", link="", description=""):
         self.id = id
         self.name = name
         self.owner_id = owner_id
@@ -15,6 +15,7 @@ class Video:
         self.views_amount = views_amount
         self.likes_amount = likes_amount
         self.link = link
+        self.description = description
 
     def __str__(self):
         return ("Video id: {}\n".format(self.id) +
@@ -25,4 +26,5 @@ class Video:
                 "Video length: {}\n".format(self.length) +
                 "Views amount: {}\n".format(str(self.views_amount)) +
                 "Likes amount: {}\n".format(str(self.likes_amount)) +
-                "Link: {}\n".format(self.link))
+                "Link: {}\n".format(self.link) +
+                "Description: {}\n".format(self.description))
