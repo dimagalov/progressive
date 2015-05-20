@@ -3,6 +3,21 @@
 __author__ = 'dimagalov'
 
 
+class User:
+    def __init__(self, id="", name="", timestamp="", friends_amount="", subscribers_amount=""):
+        self.id = id
+        self.name = name
+        self.timestamp = timestamp
+        self.friends_amount = friends_amount
+        self.subscribers_amount = subscribers_amount
+
+    def __str__(self):
+        return ("User id: {}\n".format(self.id) +
+                "User name: {}\n".format(self.name) +
+                "Amount of friends: {}\n".format(str(self.friends_amount)) +
+                "Amount of subscribers: {}\n".format(str(self.subscribers_amount)))
+
+
 class Video:
     def __init__(self, id="", name="", owner_id="", owner_name="", timestamp="", publication_date="", length="", views_amount="", likes_amount="", link="", description=""):
         self.id = id
