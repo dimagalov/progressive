@@ -15,14 +15,16 @@ def get_video_id(video_soup):
 
 def get_video_name(video_soup):
     try:
-        return video_soup.find("div", class_="video_row_info_name").a.string.strip()
+        info = video_soup.find("div", class_="video_row_info_name")
+        return info.a.string.strip()
     except:
         print("Problem occured while getting video name")
 
 
 def get_owner_id(video_soup):
     try:
-        return "https://vk.com" + video_soup.find("a", class_="mem_link")["href"]
+        return ("https://vk.com" +
+                video_soup.find("a", class_="mem_link")["href"])
     except:
         print("Problem occured while getting owner id")
 
@@ -36,26 +38,28 @@ def get_owner_name(video_soup):
 
 def get_publication_date(video_soup):
     try:
-        return video_soup.find("span", class_="video_row_info_date rel_date_needs_update").string
+        return video_soup.find("span", class_="video_row_info_date " +
+                               "rel_date_needs_update").string
     except:
         print("Problem occured while getting publication date")
 
 
 def get_video_length(video_soup):
     try:
-        return video_soup.find("div", class_="video_row_duration video_row_count").string
+        return video_soup.find("div", class_="video_row_duration " +
+                                             "video_row_count").string
     except:
         print("Problem occured while getting video length")
 
 
 def get_views_amount(video_soup):
     try:
-        amount_info = str(video_soup.find("span", class_="video_row_info_views"))
-        amount_info = amount_info.replace("<span class=\"num_delim\"> </span>", "")
-        amount_info = amount_info.replace("<span class=\"video_row_info_views\">", "")
-        amount_info = amount_info.replace("</span>", "")
-        amount_info = amount_info.strip()
-        return amount_info
+        amount = str(video_soup.find("span", class_="video_row_info_views"))
+        amount = amount.replace("<span class=\"num_delim\"> </span>", "")
+        amount = amount.replace("<span class=\"video_row_info_views\">", "")
+        amount = amount.replace("</span>", "")
+        amount = amount.strip()
+        return amount
     except:
         print("Problem occured while getting views amount")
 
@@ -94,7 +98,9 @@ def parse_video(video_soup):
     video_link = get_video_link(video_soup)
     video_description = get_video_description(video_soup)
 
-    video = Video(video_id, video_name, owner_id, owner_name, timestamp, publication_date, video_length, views_amount, likes_amount, video_link, video_description)
+    video = Video(video_id, video_name, owner_id, owner_name, timestamp,
+                  publication_date, video_length, views_amount, likes_amount,
+                  video_link, video_description)
     return video
 
 

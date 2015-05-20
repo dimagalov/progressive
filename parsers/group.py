@@ -8,7 +8,8 @@ from common.tools import cook_soup_from_url, get_current_timestamp
 
 def get_group_id(soup):
     try:
-        return soup.find("a", class_="anchor")["name"].split('_')[0][4:].replace("-", "")
+        info = soup.find("a", class_="anchor")["name"]
+        return info.split('_')[0][4:].replace("-", "")
     except:
         print("Problem occured while getting group id")
 
@@ -25,8 +26,8 @@ def get_subscribers_amount(soup):
         info = soup.find_all("a", class_="pm_item")
         for info_item in info:
             if info_item.text[:10] == "Подписчики":
-                subscribers_amount = info_item.text[10:].replace(" ", "").strip()
-                return subscribers_amount
+                subscribers_amount = info_item.text[10:]
+                return subscribers_amount.replace(" ", "").strip()
     except:
         print("Problem occured while getting subscribers amount")
 
@@ -47,5 +48,6 @@ def parse_group_page(url):
     subscribers_amount = get_subscribers_amount(soup)
     group_link = get_group_link(soup)
 
-    group = Group(group_id, group_name, timestamp, subscribers_amount, group_link)
+    group = Group(group_id, group_name, timestamp,
+                  subscribers_amount, group_link)
     print(group)

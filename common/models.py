@@ -4,7 +4,8 @@ __author__ = 'dimagalov'
 
 
 class User:
-    def __init__(self, id="", name="", timestamp="", friends_amount="", subscribers_amount="", link=""):
+    def __init__(self, id="", name="", timestamp="",
+                 friends_amount="", subscribers_amount="", link=""):
         self.id = id
         self.name = name
         self.timestamp = timestamp
@@ -16,12 +17,14 @@ class User:
         return ("User id: {}\n".format(self.id) +
                 "User name: {}\n".format(self.name) +
                 "Amount of friends: {}\n".format(str(self.friends_amount)) +
-                "Amount of subscribers: {}\n".format(str(self.subscribers_amount)) +
+                "Amount of subscribers: " +
+                "{}\n".format(str(self.subscribers_amount)) +
                 "User link: {}\n".format(self.link))
 
 
 class Group:
-    def __init__(self, id="", name="", timestamp="", subscribers_amount="", link=""):
+    def __init__(self, id="", name="", timestamp="",
+                 subscribers_amount="", link=""):
         self.id = id
         self.name = name
         self.timestamp = timestamp
@@ -31,12 +34,15 @@ class Group:
     def __str__(self):
         return ("Group id: {}\n".format(self.id) +
                 "Group name: {}\n".format(self.name) +
-                "Amount of subscribers: {}\n".format(str(self.subscribers_amount)) +
+                "Amount of subscribers: " +
+                "{}\n".format(str(self.subscribers_amount)) +
                 "Group link: {}\n".format(self.link))
 
 
 class Video:
-    def __init__(self, id="", name="", owner_id="", owner_name="", timestamp="", publication_date="", length="", views_amount="", likes_amount="", link="", description=""):
+    def __init__(self, id="", name="", owner_id="", owner_name="",
+                 timestamp="", publication_date="", length="", views_amount="",
+                 likes_amount="", link="", description=""):
         self.id = id
         self.name = name
         self.owner_id = owner_id
