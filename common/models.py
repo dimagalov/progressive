@@ -4,18 +4,35 @@ __author__ = 'dimagalov'
 
 
 class User:
-    def __init__(self, id="", name="", timestamp="", friends_amount="", subscribers_amount=""):
+    def __init__(self, id="", name="", timestamp="", friends_amount="", subscribers_amount="", link=""):
         self.id = id
         self.name = name
         self.timestamp = timestamp
         self.friends_amount = friends_amount
         self.subscribers_amount = subscribers_amount
+        self.link = link
 
     def __str__(self):
         return ("User id: {}\n".format(self.id) +
                 "User name: {}\n".format(self.name) +
                 "Amount of friends: {}\n".format(str(self.friends_amount)) +
-                "Amount of subscribers: {}\n".format(str(self.subscribers_amount)))
+                "Amount of subscribers: {}\n".format(str(self.subscribers_amount)) +
+                "User link: {}\n".format(self.link))
+
+
+class Group:
+    def __init__(self, id="", name="", timestamp="", subscribers_amount="", link=""):
+        self.id = id
+        self.name = name
+        self.timestamp = timestamp
+        self.subscribers_amount = subscribers_amount
+        self.link = link
+
+    def __str__(self):
+        return ("Group id: {}\n".format(self.id) +
+                "Group name: {}\n".format(self.name) +
+                "Amount of subscribers: {}\n".format(str(self.subscribers_amount)) +
+                "Group link: {}\n".format(self.link))
 
 
 class Video:

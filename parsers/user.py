@@ -32,10 +32,17 @@ def get_subscribers_amount(soup):
         info = soup.find_all("a", class_="pm_item")
         for info_item in info:
             if info_item.text[:10] == "Подписчики":
-                friends_amount = info_item.text[10:].replace(" ", "").strip()
-                return friends_amount
+                subscribers_amount = info_item.text[10:].replace(" ", "").strip()
+                return subscribers_amount
     except:
         print("Problem occured while getting subscribers amount")
+
+
+def get_user_link(soup):
+    try:
+        return "https://vk.com/id" + get_user_id(soup)
+    except:
+        print("Problem occured while getting user link")
 
 
 def parse_user_page(url):
@@ -46,6 +53,7 @@ def parse_user_page(url):
     timestamp = get_current_timestamp()
     friends_amount = get_friends_amount(soup)
     subscribers_amount = get_subscribers_amount(soup)
+    user_link = get_user_link(soup)
 
-    user = User(user_id, user_name, timestamp, friends_amount, subscribers_amount)
+    user = User(user_id, user_name, timestamp, friends_amount, subscribers_amount, user_link)
     print(user)
