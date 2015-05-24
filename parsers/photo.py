@@ -156,6 +156,7 @@ def get_photo_list(soup):
 
 
 def parse_photo_page(url):
+<<<<<<< HEAD
     
     '''
     #html_doc = requests.get('http://m.vk.com/album53083705_00?_fm=photos').text
@@ -163,6 +164,10 @@ def parse_photo_page(url):
     #soup = BeautifulSoup(html_doc)
     #print(html_doc)
     '''
+=======
+    url = "//m.".join(url.split("//"))
+
+>>>>>>> origin/master
     MAX_PICS = 4024
 
     if url.find('offset') == -1:
@@ -171,10 +176,10 @@ def parse_photo_page(url):
     pos = url.find('=') + 1
     total_amount = 0
 
-    for i in range(0, MAX_PICS, 24):
-        url = url[:pos] + str(i)
+    for offset in range(0, MAX_PICS, 24):
+        url = url[:pos] + str(offset)
 
-        if i % 96 == 0:
+        if offset % 96 == 0:
             time.sleep(1)
 
         try:
@@ -187,7 +192,14 @@ def parse_photo_page(url):
             for photo in photo_list:
                 parsed_photo = parse_photo(photo)
                 print(parsed_photo)
+<<<<<<< HEAD
             
+=======
+
+            if len(photo_list) == 0:
+                break
+
+>>>>>>> origin/master
             total_amount += len(photo_list)
             print(total_amount)
         except:
