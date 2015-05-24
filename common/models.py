@@ -111,3 +111,31 @@ class Group_Wall:
                 "Group name: {}\n".format(self.group.name) +
                 "Amount of posts: {}\n".format(str(len(self.posts))) +
                 "Wall link: {}\n".format(self.link))
+
+
+class Photo:
+    def __init__(self, id="", name="", owner_id="", owner_name="", timestamp="", publication_date="", length="", \
+                 views_amount="", likes_amount="", reposted_amount="", link="", description=""):
+        self.id = id
+        self.name = name
+        self.owner_id = owner_id
+        self.owner_name = owner_name
+        self.timestamp = timestamp
+        self.publication_date = publication_date
+        self.views_amount = views_amount
+        self.likes_amount = likes_amount
+        self.reposted_amount = reposted_amount
+        self.link = link
+        self.description = description
+
+    def __str__(self):
+        return ("Photo id: {}\n".format(self.id) +
+                "Photo name: {}\n".format(self.name) +
+                "Photo owner id: {}\n".format(self.owner_id) +
+                "Photo owner name: {}\n".format(self.owner_name) +
+                "Publication date: {}\n".format(self.publication_date) +
+                "Views amount: {}\n".format(str(self.views_amount)) +
+                "Likes amount: {}\n".format(str(self.likes_amount)) +
+                "Reposted amount: {}\n".format(str(self.reposted_amount)) +
+                "Link: {}\n".format(self.link) +
+                "Description: {}\n".format(self.description))
