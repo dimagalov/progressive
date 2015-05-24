@@ -23,8 +23,12 @@ def get_photo_name(photo_soup):
 
 
 def get_owner_id(photo_soup):
+    photo_id = get_photo_id(photo_soup)
+    url = 'https://m.vk.com/%s' % photo_id
+
     try:
-        return "https://vk.com" + photo_soup.find("a", class_="mem_link")["href"]
+        owner_soup = cook_soup_from_url(url)
+        return owner_soup.find_all('dd')[-1].contents[0]['href']
     except:
         print("Problem occured while getting owner id")
 
@@ -141,13 +145,14 @@ def parse_photo(photo_soup):
     '''
     publication_date = get_publication_date(photo_soup)
     photo_description = get_photo_description(photo_soup)
+    owner_id = get_owner_id(photo_soup)
     timestamp = get_current_timestamp()
     likes_amount = get_likes_amount(photo_soup)
     reposted_amount = get_reposted_amount(photo_soup)
     photo_link = get_photo_link(photo_soup)
     photo = Photo(id=photo_id, link=photo_link, likes_amount=likes_amount, \
                         reposted_amount=reposted_amount, timestamp=get_current_timestamp(), publication_date=publication_date, \
-                                                description=photo_description)
+                                                description=photo_description, owner_id=owner_id)
 
     return photo
 
