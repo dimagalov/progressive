@@ -2,9 +2,9 @@
 
 __author__ = 'emil.guseynov'
 
-import time
 from common.models import Photo
 from common.tools import cook_soup_from_url, get_current_timestamp
+import time
 
 
 def get_photo_id(photo_soup):
@@ -12,14 +12,6 @@ def get_photo_id(photo_soup):
         return photo_soup["href"][1:]
     except:
         print("Problem occured while getting photo id")
-
-
-def get_photo_name(photo_soup):
-    try:
-        info = photo_soup.find("div", class_="photo_row_info_name")
-        return info.a.string.strip()
-    except:
-        print("Problem occured while getting photo name")
 
 
 def get_owner_id(photo_soup):
@@ -34,16 +26,19 @@ def get_owner_id(photo_soup):
 
 
 def get_owner_name(photo_soup):
+    photo_id = get_photo_id(photo_soup)
+    url = 'https://m.vk.com/%s' % photo_id
+
     try:
-        return photo_soup.find("a", class_="mem_link").string
+        owner_soup = cook_soup_from_url(url)
+        return owner_soup.find_all('dd')[-1].contents[0].contents[0]
     except:
         print("Problem occured while getting owner name")
 
 
 def get_publication_date(photo_soup):
     photo_id = get_photo_id(photo_soup)
-    pos = photo_id.find('_') + 1
-    url = 'https://m.vk.com/%s?list=%s' % (photo_id, photo_id[pos])
+    url = 'https://m.vk.com/%s' % photo_id
     try:
         pub_soup = cook_soup_from_url(url)
         return pub_soup.find('span', class_='item_date').contents[0]
@@ -53,12 +48,12 @@ def get_publication_date(photo_soup):
 
 def get_views_amount(photo_soup):
     try:
-        info = str(photo_soup.find("span", class_="photo_row_info_views"))
-        info = info.replace("<span class=\"num_delim\"> </span>", "")
-        info = info.replace("<span class=\"photo_row_info_views\">", "")
-        info = info.replace("</span>", "")
-        info = info.strip()
-        return info
+        amount_info = str(photo_soup.find("span", class_="photo_row_info_views"))
+        amount_info = amount_info.replace("<span class=\"num_delim\"> </span>", "")
+        amount_info = amount_info.replace("<span class=\"photo_row_info_views\">", "")
+        amount_info = amount_info.replace("</span>", "")
+        amount_info = amount_info.strip()
+        return amount_info
     except:
         print("Problem occured while getting views amount")
 
@@ -68,6 +63,8 @@ def get_likes_amount(photo_soup):
     url = 'https://m.vk.com/like?act=members&object={}'.format(photo_id)
     try:
         likes_soup = cook_soup_from_url(url)
+
+        #fetch numbers
 
         likes_list = likes_soup.find('h4', class_='slim_header').contents
         likes_amount = ""
@@ -87,21 +84,25 @@ def get_likes_amount(photo_soup):
 
 def get_reposted_amount(photo_soup):
     photo_id = get_photo_id(photo_soup)
-    url_pattern = 'https://m.vk.com/like?act=members&object={}&tab=published'
-    url = url_pattern.format(photo_id)
-
+    url = 'https://m.vk.com/like?act=members&object=%s&tab=published' % photo_id
     try:
         reposted_soup = cook_soup_from_url(url)
-        span_str = reposted_soup.find('span',
-                                      class_='slim_header_label').contents[0]
 
         reposted_amount = ""
-        for item in span_str.split():
-            if item.isdigit():
-                reposted_amount = item
+        span_str = reposted_soup.find('span', class_='slim_header_label')
+
+        if span_str is not None:
+            span_str = span_str.contents[0]
+
+            #fetch numbers
+
+            for item in span_str.split():
+                if item.isdigit():
+                    reposted_amount = item
+
         return reposted_amount
     except:
-        print("Problem occured while getting likes amount")
+        print("Problem occured while getting reposted amount")
 
 
 def get_photo_link(photo_soup):
@@ -129,12 +130,12 @@ def get_photo_description(photo_soup):
 def parse_photo(photo_soup):
 
     photo_id = get_photo_id(photo_soup)
-    photo_name = get_photo_name(photo_soup)
+
     owner_id = get_owner_id(photo_soup)
     owner_name = get_owner_name(photo_soup)
 
     publication_date = get_publication_date(photo_soup)
-    views_amount = get_views_amount(photo_soup)
+
     likes_amount = get_likes_amount(photo_soup)
     photo_link = get_photo_link(photo_soup)
     photo_description = get_photo_description(photo_soup)
@@ -143,10 +144,10 @@ def parse_photo(photo_soup):
     photo_link = get_photo_link(photo_soup)
 
     photo = Photo(id=photo_id, link=photo_link, likes_amount=likes_amount,
-                  reposted_amount=reposted_amount, name=photo_name,
-                  timestamp=timestamp, owner_name=owner_name,
-                  publication_date=publication_date, views_amount=views_amount,
-                  description=photo_description, owner_id=owner_id)
+                  reposted_amount=reposted_amount,
+                  timestamp=timestamp, publication_date=publication_date,
+                  description=photo_description, owner_id=owner_id, owner_name=owner_name)
+
     return photo
 
 
@@ -175,7 +176,9 @@ def parse_photo_page(url):
             time.sleep(1)
 
         try:
+
             soup = cook_soup_from_url(url)
+
             photo_list = get_photo_list(soup)
 
             for photo in photo_list:
@@ -186,6 +189,7 @@ def parse_photo_page(url):
                 break
 
             total_amount += len(photo_list)
+            print(total_amount)
         except:
-            print('Problem occured while parsing photo page')
+            print('whoops')
     print('-----------\nTotal photos: %d' % total_amount)
