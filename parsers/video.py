@@ -113,16 +113,16 @@ def get_video_list(soup):
 
 
 def parse_video_page(url):
-    MAX_VIDS = 4200
+    MAX_VIDEOS = 4200
 
     if url.find('offset') == -1:
         url += '?offset='
 
-    pos = url.find('=') + 1
+    index = url.find('=') + 1
     total_amount = 0
 
-    for offset in range(0, MAX_VIDS, 21):
-        url = url[:pos] + str(offset)
+    for offset in range(0, MAX_VIDEOS, 21):
+        url = url[:index] + str(offset)
 
         if offset % 84 == 0:
             time.sleep(1)
@@ -140,5 +140,5 @@ def parse_video_page(url):
 
             total_amount += len(video_list)
         except:
-            print('Problem occured while parsing photo page')
+            print('Problem occured while parsing video page')
     print('-----------\nTotal videos: %d' % total_amount)

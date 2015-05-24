@@ -90,9 +90,11 @@ class Post:
 
 
 class User_Wall:
-    def __init__(self, user=User(), posts=[]):
+    def __init__(self, user=User(), posts=[], timestamp="", link=""):
         self.user = user
         self.posts = posts
+        self.timestamp = timestamp
+        self.link = link
 
     def __str__(self):
         return ("User id: {}\n".format(self.user.id) +

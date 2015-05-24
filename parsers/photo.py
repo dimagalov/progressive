@@ -160,16 +160,16 @@ def get_photo_list(soup):
 def parse_photo_page(url):
     url = "//m.".join(url.split("//"))
 
-    MAX_PICS = 4024
+    MAX_PICTURES = 4024
 
     if url.find('offset') == -1:
         url += '?offset='
 
-    pos = url.find('=') + 1
+    index = url.find('=') + 1
     total_amount = 0
 
-    for offset in range(0, MAX_PICS, 24):
-        url = url[:pos] + str(offset)
+    for offset in range(0, MAX_PICTURES, 24):
+        url = url[:index] + str(offset)
 
         if offset % 96 == 0:
             time.sleep(1)
