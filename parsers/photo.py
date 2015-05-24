@@ -163,7 +163,6 @@ def parse_photo_page(url):
             time.sleep(1)
 
         try:
-
             soup = cook_soup_from_url(url)
             photo_list = get_photo_list(soup)
 
@@ -173,5 +172,5 @@ def parse_photo_page(url):
 
             total_amount += len(photo_list)
         except:
-            print('whoops')
+            print('Problem occured while parsing photo page')
     print('-----------\nTotal photos: %d' % total_amount)
