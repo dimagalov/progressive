@@ -51,3 +51,5 @@ def parse_group_page(url):
     group = Group(group_id, group_name, timestamp,
                   subscribers_amount, group_link)
     print(group)
+
+    return group
