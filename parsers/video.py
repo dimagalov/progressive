@@ -2,6 +2,7 @@
 
 __author__ = 'dimagalov'
 
+import time
 from common.models import Video
 from common.tools import cook_soup_from_url, get_current_timestamp
 
@@ -112,9 +113,32 @@ def get_video_list(soup):
 
 
 def parse_video_page(url):
-    soup = cook_soup_from_url(url)
-    video_list = get_video_list(soup)
+    MAX_VIDS = 4200
 
-    for video in video_list:
-        parsed_video = parse_video(video)
-        print(parsed_video)
+    if url.find('offset') == -1:
+        url += '?offset='
+
+    pos = url.find('=') + 1
+    total_amount = 0
+
+    for offset in range(0, MAX_VIDS, 21):
+        url = url[:pos] + str(offset)
+
+        if offset % 84 == 0:
+            time.sleep(1)
+
+        try:
+            soup = cook_soup_from_url(url)
+            video_list = get_video_list(soup)
+
+            for video in video_list:
+                parsed_video = parse_video(video)
+                print(parsed_video)
+
+            if len(video_list) == 0:
+                break
+
+            total_amount += len(video_list)
+        except:
+            print('Problem occured while parsing photo page')
+    print('-----------\nTotal videos: %d' % total_amount)
