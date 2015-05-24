@@ -7,7 +7,7 @@ __author__ = 'dimagalov'
 # from parsers.photo import parse_photo_page
 # from parsers.video import parse_video_page
 # from parsers.post import parse_post
-from parsers.user_wall import parse_user_wall
+# from parsers.user_wall import parse_user_wall
 # from parsers.group_wall import parse_group_wall
 
 
@@ -16,5 +16,5 @@ from parsers.user_wall import parse_user_wall
 # parse_photo_page('https://vk.com/photos53083705')
 # parse_video_page('https://vk.com/videos53083705')
 # parse_post('https://vk.com/wall53083705_52454')
-parse_user_wall('https://vk.com/id53083705')
-# parse_group_wall('https://vk.com/wall-43618728?own=1')
+# parse_user_wall('https://vk.com/id53083705')
+# parse_group_wall('https://vk.com/public43618728')
