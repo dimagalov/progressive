@@ -66,3 +66,48 @@ class Video:
                 "Likes amount: {}\n".format(str(self.likes_amount)) +
                 "Link: {}\n".format(self.link) +
                 "Description: {}\n".format(self.description))
+
+
+class Post:
+    def __init__(self, id="", author=User(), timestamp="", publication_date="",
+                 likes_amount="", reposts_amount="", link=""):
+        self.id = id
+        self.author = author
+        self.timestamp = timestamp
+        self.publication_date = publication_date
+        self.likes_amount = likes_amount
+        self.reposts_amount = reposts_amount
+        self.link = link
+
+    def __str__(self):
+        return ("Post id: {}\n".format(self.id) +
+                "Post author name: {}\n".format(self.author.name) +
+                "Post author id: {}\n".format(self.author.id) +
+                "Publication date: {}\n".format(self.publication_date) +
+                "Likes amount: {}\n".format(str(self.likes_amount)) +
+                "Reposts amount: {}\n".format(str(self.reposts_amount)) +
+                "Link: {}\n".format(self.link))
+
+
+class User_Wall:
+    def __init__(self, user=User(), posts=[]):
+        self.user = user
+        self.posts = posts
+
+    def __str__(self):
+        return ("User id: {}\n".format(self.user.id) +
+                "User name: {}\n".format(self.user.name) +
+                "Amount of posts: {}\n".format(str(len(self.posts))) +
+                "Wall link: {}\n".format(self.link))
+
+
+class Group_Wall:
+    def __init__(self, group=Group(), posts=[]):
+        self.group = group
+        self.posts = posts
+
+    def __str__(self):
+        return ("Group id: {}\n".format(self.group.id) +
+                "Group name: {}\n".format(self.group.name) +
+                "Amount of posts: {}\n".format(str(len(self.posts))) +
+                "Wall link: {}\n".format(self.link))
