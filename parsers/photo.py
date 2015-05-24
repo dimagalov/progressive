@@ -23,9 +23,12 @@ def get_photo_name(photo_soup):
 
 
 def get_owner_id(photo_soup):
+    photo_id = get_photo_id(photo_soup)
+    url = 'https://m.vk.com/%s' % photo_id
+
     try:
-        return ("https://vk.com" +
-                photo_soup.find("a", class_="mem_link")["href"])
+        owner_soup = cook_soup_from_url(url)
+        return owner_soup.find_all('dd')[-1].contents[0]['href']
     except:
         print("Problem occured while getting owner id")
 
@@ -38,9 +41,12 @@ def get_owner_name(photo_soup):
 
 
 def get_publication_date(photo_soup):
+    photo_id = get_photo_id(photo_soup)
+    pos = photo_id.find('_') + 1
+    url = 'https://m.vk.com/%s?list=%s' % (photo_id, photo_id[pos])
     try:
-        return photo_soup.find("span", class_="photo_row_info_date " +
-                                              "rel_date_needs_update").string
+        pub_soup = cook_soup_from_url(url)
+        return pub_soup.find('span', class_='item_date').contents[0]
     except:
         print("Problem occured while getting publication date")
 
@@ -106,8 +112,16 @@ def get_photo_link(photo_soup):
 
 
 def get_photo_description(photo_soup):
+    photo_id = get_photo_id(photo_soup)
+    url = 'https://m.vk.com/%s' % photo_id
     try:
-        return "None"
+        desc_soup = cook_soup_from_url(url)
+        res = desc_soup.find('div', class_='mv_description')
+        if res is not None:
+            return res.contents[0]
+
+        return ""
+
     except:
         print("Problem occured while getting photo description")
 
@@ -115,28 +129,24 @@ def get_photo_description(photo_soup):
 def parse_photo(photo_soup):
 
     photo_id = get_photo_id(photo_soup)
-
-    '''
     photo_name = get_photo_name(photo_soup)
     owner_id = get_owner_id(photo_soup)
     owner_name = get_owner_name(photo_soup)
 
     publication_date = get_publication_date(photo_soup)
-
     views_amount = get_views_amount(photo_soup)
     likes_amount = get_likes_amount(photo_soup)
     photo_link = get_photo_link(photo_soup)
     photo_description = get_photo_description(photo_soup)
-
-    '''
-
     timestamp = get_current_timestamp()
-    likes_amount = get_likes_amount(photo_soup)
     reposted_amount = get_reposted_amount(photo_soup)
     photo_link = get_photo_link(photo_soup)
-    photo = Photo(photo_id, photo_link, likes_amount,
-                  reposted_amount, timestamp)
 
+    photo = Photo(id=photo_id, link=photo_link, likes_amount=likes_amount,
+                  reposted_amount=reposted_amount, name=photo_name,
+                  timestamp=timestamp, owner_name=owner_name,
+                  publication_date=publication_date, views_amount=views_amount,
+                  description=photo_description, owner_id=owner_id)
     return photo
 
 
