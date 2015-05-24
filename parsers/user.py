@@ -58,3 +58,5 @@ def parse_user_page(url):
     user = User(user_id, user_name, timestamp,
                 friends_amount, subscribers_amount, user_link)
     print(user)
+
+    return user
