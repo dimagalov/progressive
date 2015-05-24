@@ -158,6 +158,8 @@ def get_photo_list(soup):
 
 
 def parse_photo_page(url):
+    url = "//m.".join(url.split("//"))
+
     MAX_PICS = 4024
 
     if url.find('offset') == -1:
