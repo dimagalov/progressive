@@ -104,9 +104,11 @@ class User_Wall:
 
 
 class Group_Wall:
-    def __init__(self, group=Group(), posts=[]):
+    def __init__(self, group=Group(), posts=[], timestamp="", link=""):
         self.group = group
         self.posts = posts
+        self.timestamp = timestamp
+        self.link = link
 
     def __str__(self):
         return ("Group id: {}\n".format(self.group.id) +

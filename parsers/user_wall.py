@@ -4,7 +4,7 @@ __author__ = 'dimagalov'
 
 import time
 from common.models import User_Wall
-from parsers.post import parse_post
+from parsers.user_post import parse_post
 from common.tools import cook_soup_from_url, get_current_timestamp
 
 
