@@ -22,9 +22,15 @@ def get_secondary_info(photo_soup):
         owner_query = soup.find_all('dd')[-1].contents[0]
 
         owner_id, owner_name, \
-                pub_date, photo_desc = owner_query['href'], owner_query.contents[0], \
+                pub_date = owner_query['href'], owner_query.contents[0], \
                                                 soup.find('span', class_='item_date').contents[0], \
-                                                        soup.find('span', class_='item_date').contents[0]  
+                                                        
+        photo_desc = soup.find('div', class_='mv_description')
+        
+        if photo_desc == None:
+            photo_desc = ""
+        else:
+            photo_desc = photo_desc.contents[0]
 
         return (owner_id, owner_name, pub_date, photo_desc)
     except:
