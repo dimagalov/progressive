@@ -118,8 +118,8 @@ class Group_Wall:
 
 
 class Photo:
-    def __init__(self, id="", owner_id="", owner_name="", timestamp="", publication_date="", \
-                                                            likes="", reposts="", link="", desc=""):
+    def __init__(self, id="", owner_id="", owner_name="", timestamp="",
+                 publication_date="", likes="", reposts="", link="", desc=""):
         self.id = id
         self.owner_name = owner_name
         self.owner_id = owner_id
