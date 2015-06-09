@@ -1,6 +1,6 @@
 import vk_api
 
-login, password = '', ''
+login, password = 'emilchess@mail.ru', 'Emilius060696'
 vk = vk_api.VkApi(login, password)
 vk.authorization()
 tools = vk_api.VkTools(vk)
@@ -20,7 +20,7 @@ def is_club(link):
 
 
 def rank_groups(groups):
-    groups_info = vk.method('groups.getById', {'group_ids': ",".join(groups), 'fields': 'members_count'})
+    groups_info = list(filter(lambda club: 'members_count' in club.keys(), vk.method('groups.getById', {'group_ids': ",".join(groups), 'fields': 'members_count'})))
     groups_info.sort(key=lambda gr: gr['members_count'], reverse=True)
     return groups_info
 
@@ -59,23 +59,52 @@ def get_celeb(text):
 
     while add:
         add = 0
-        club = text.find('club', pos)
-        if club != -1 and text[club - 1] == '[':
-            pipe = text.find('|', club)
-            ans.append(text[club:pipe])
+        pos = text.find('club', pos)
+        if pos != -1 and text[pos - 1] == '[':
+            pipe = text.find('|', pos)
+            ans.append(text[pos:pipe])
             pos = pipe
             add = 1
     pos = 0
     add = 1
     while add:
         add = 0
-        user = text.find('id', pos)
-        if user != -1 and text[user - 1] == '[':
-            pipe = text.find('|', user)
-            ans.append(text[user:pipe])
+        pos = text.find('id', pos)
+        if pos != -1 and text[pos - 1] == '[':
+            pipe = text.find('|', pos)
+            ans.append(text[pos:pipe])
             pos = pipe
             add = 1
 
+    ''' Old style vkontakte.ru/  '''
+    add = 1
+    pos = 0
+    while add:
+        add = 0
+        pos = text.find('vkontakte.ru/', pos)
+        if pos != -1:
+            club = "club"
+            pos += len('vkontakte.ru/')
+            while pos < len(text) and (text[pos].isalpha() or text[pos].isdigit()):
+                club += text[pos]
+                pos += 1
+            ans.append(club)
+            add = 1
+
+    if text.find('id') == -1:
+        add = 1
+        pos = 0
+        while add:
+            add = 0
+            pos = text.find('vk.com/', pos)
+            if pos != -1:
+                club = "club"
+                pos += len('vk.com/')
+                while pos < len(text) and (text[pos].isalpha() or text[pos].isdigit()):
+                    club += text[pos]
+                    pos += 1
+                ans.append(club)
+                add = 1
     return ans
 
 people = []
@@ -91,10 +120,9 @@ for post in posts:
         elif is_club(celeb_id):
             groups.append(celeb_id[4:])
 
-print(len(groups))
-
 groups = list(set(groups))  # remove duplicates
 ranked_groups = rank_groups(groups)
+print(len(ranked_groups))
 for i, gr in enumerate(ranked_groups):
     print('#%d %s %s %s' % (i, format(gr['members_count'], ',d'), gr['name'], 'vk.com/' + gr['screen_name']))
 
@@ -102,6 +130,6 @@ print('---------\n\n')
 
 people = list(map(int, set(people)))  # remove duplicates
 ranked_users = rank_users(people)
-print(len(people), len(ranked_users))
+print(len(ranked_users))
 for i, user in enumerate(ranked_users):
     print('#%d %s %s %s' % (i, format(user['members_count'], ',d'), user['name'], 'vk.com/id' + str(user['id'])))
