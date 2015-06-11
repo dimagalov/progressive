@@ -28,7 +28,8 @@ def rank_groups(groups):
 def rank_users(people):
     code = """var i=0, res={}, users=%s;
     while (i < 25) {var c=API.users.get({"user_ids":users[i], "fields" : "counters"});
-    res = res + c;
+    if (c@.response.length)
+        res = res + c;
     i = i + 1;
     }return res;""".replace('\n', '')
 
