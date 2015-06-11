@@ -1,6 +1,6 @@
 import vk_api
 
-login, password = 'emilchess@mail.ru', 'Emilius060696'
+login, password = '', ''
 vk = vk_api.VkApi(login, password)
 vk.authorization()
 tools = vk_api.VkTools(vk)
