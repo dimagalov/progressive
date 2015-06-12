@@ -2,8 +2,9 @@
 
 __author__ = 'dimagalov'
 
+import vk
 import time
-from bs4 import BeautifulSoup
+import datetime
 from urllib.request import Request, urlopen
 from urllib.error import URLError, HTTPError
 
@@ -22,28 +23,15 @@ def open_url(url):
         return response.read()
 
 
-def cook_soup_from_url(url):
-    try:
-        html = open_url(url)
-    except:
-        print('Couldn\'t get html code of the page while cooking soup')
-    else:
-        try:
-            soup = BeautifulSoup(html)
-        except:
-            print('Something went wrong when we were cooking your soup')
-        else:
-            return soup
-
-
-def cook_soup_from_html(html):
-    try:
-        soup = BeautifulSoup(html)
-    except:
-        print('Something went wrong when we were cooking your soup')
-    else:
-        return soup
-
-
 def get_current_timestamp():
     return int(time.time())
+
+
+def timestamp_to_date(timestamp):
+    return datetime.datetime.fromtimestamp(timestamp).strftime('%Y-%m-%d %H:%M:%S')
+
+
+def vk_api_authorization():
+    app_id, login, password = 4949093, input(), input()
+    vk_api = vk.API(app_id, login, password)
+    return vk_api
