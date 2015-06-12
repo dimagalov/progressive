@@ -35,6 +35,20 @@ def get_group_verified(group):
         print("Problem occured while getting group verification")
 
 
+def get_group_type(group):
+    try:
+        return group["type"]
+    except:
+        print("Problem occured while getting group type")
+
+
+def get_group_description(group):
+    try:
+        return group["description"]
+    except:
+        print("Problem occured while getting group description")
+
+
 def get_group_link(group):
     try:
         return "https://vk.com/club" + get_group_id(group)
@@ -48,11 +62,13 @@ def parse_group(group):
     timestamp = get_current_timestamp()
     subscribers_amount = get_subscribers_amount(group)
     verified = get_group_verified(group)
+    type = get_group_type(group)
+    description = get_group_description(group)
     link = get_group_link(group)
 
     parsed_group = Group(id=id, name=name, timestamp=timestamp, link=link,
                          subscribers_amount=subscribers_amount,
-                         verified=verified)
+                         verified=verified, type=type, description=description)
 
     print(parsed_group)
 
@@ -64,7 +80,7 @@ def parse_group_pages(group_ids):
 
     groups = vk_api.groups.getById(
         group_ids=group_ids,
-        fields="members_count,verified")
+        fields="members_count,verified,description")
 
     parsed_groups = [parse_group(group) for group in groups]
 

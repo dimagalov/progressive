@@ -36,13 +36,16 @@ class User:
 
 class Group:
     def __init__(self, id=0, name="", timestamp="",
-                 subscribers_amount=0, link="", verified=0):
+                 subscribers_amount=0, link="", verified=0,
+                 type="", description=""):
         self.id = id
         self.name = name
         self.timestamp = timestamp
         self.subscribers_amount = subscribers_amount
         self.link = link
         self.verified = verified
+        self.type = type
+        self.description = description
 
     def __str__(self):
         return ("Group id: {}\n".format(str(self.id)) +
@@ -50,6 +53,8 @@ class Group:
                 "Amount of subscribers: " +
                 "{}\n".format(str(self.subscribers_amount)) +
                 "Group verified: {}\n".format(str(self.verified)) +
+                "Type: {}\n".format(self.type) +
+                "Description:\n{}\n".format(self.description) +
                 "Group link: {}\n".format(self.link))
 
 
