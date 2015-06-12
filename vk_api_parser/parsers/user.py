@@ -5,6 +5,7 @@ __author__ = 'dimagalov'
 from common.tools import vk_api_authorization
 from common.models import User
 from common.tools import get_current_timestamp
+from parsers.wall import parse_wall
 
 
 def get_user_id(user):
@@ -86,6 +87,13 @@ def get_user_link(user):
         print("Problem occured while getting user link")
 
 
+def get_user_wall(user):
+    try:
+        return parse_wall(get_user_id(user))
+    except:
+        print("Problem occured while getting user wall")
+
+
 def parse_user(vk_api, user):
     id = get_user_id(user)
     first_name = get_user_first_name(user)
@@ -99,14 +107,13 @@ def parse_user(vk_api, user):
     bdate = get_user_bdate(user)
     country = get_user_country(user)
     city = get_user_city(user)
+    wall = get_user_wall(user)
 
     parsed_user = User(id=id, first_name=first_name, last_name=last_name,
                        timestamp=timestamp, link=link, verified=verified,
                        friends_amount=friends_amount, sex=sex,
                        subscribers_amount=subscribers_amount,
-                       bdate=bdate, country=country, city=city)
-
-    print(parsed_user)
+                       bdate=bdate, country=country, city=city, wall=wall)
 
     return parsed_user
 

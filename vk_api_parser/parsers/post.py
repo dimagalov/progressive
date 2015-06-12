@@ -74,7 +74,7 @@ def get_post_attachments(post):
     try:
         return post["attachments"]
     except:
-        print("Problem occured while getting post attachments")
+        pass
 
 
 def parse_post(post):
@@ -95,7 +95,5 @@ def parse_post(post):
                        text=text, likes_amount=likes_amount,
                        reposts_amount=reposts_amount, post_type=post_type,
                        link=link, attachments=attachments)
-
-    print(parsed_post)
 
     return parsed_post

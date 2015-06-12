@@ -1,5 +1,4 @@
-
-from common.models import Photo
+from web_scrapping.common.models import Photo
 import vk_api
 import datetime
 
@@ -9,7 +8,7 @@ def get_date(timestamp):
 
 
 def parse_photo_page(screen_name):
-    login, password = '', ''
+    login, password = "+79652475643", "lalka228"
     vk = vk_api.VkApi(login, password)
     vk.authorization()
 

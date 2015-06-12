@@ -5,6 +5,7 @@ __author__ = 'dimagalov'
 from common.tools import vk_api_authorization
 from common.models import Group
 from common.tools import get_current_timestamp
+from parsers.wall import parse_wall
 
 
 def get_group_id(group):
@@ -56,6 +57,13 @@ def get_group_link(group):
         print("Problem occured while getting group link")
 
 
+def get_group_wall(group):
+    try:
+        return parse_wall(get_group_id(group))
+    except:
+        print("Problem occured while getting group wall")
+
+
 def parse_group(group):
     id = get_group_id(group)
     name = get_group_name(group)
@@ -65,12 +73,11 @@ def parse_group(group):
     type = get_group_type(group)
     description = get_group_description(group)
     link = get_group_link(group)
+    wall = get_group_wall(group)
 
     parsed_group = Group(id=id, name=name, timestamp=timestamp, link=link,
-                         subscribers_amount=subscribers_amount,
+                         subscribers_amount=subscribers_amount, wall=wall,
                          verified=verified, type=type, description=description)
-
-    print(parsed_group)
 
     return parsed_group
 

@@ -3,10 +3,24 @@
 __author__ = 'dimagalov'
 
 
+class Wall:
+    def __init__(self, owner_id=0, posts=[], timestamp="", link=""):
+        self.owner_id = owner_id
+        self.posts = posts
+        self.timestamp = timestamp
+        self.link = link
+
+    def __str__(self):
+        return ("    Owner id: {}\n".format(str(self.owner_id)) +
+                "    Amount of posts: {}\n".format(str(len(self.posts))) +
+                "    Wall link: {}\n".format(self.link))
+
+
 class User:
     def __init__(self, id=0, first_name="", last_name="", timestamp="",
                  friends_amount=0, subscribers_amount=0, link="",
-                 verified=0, sex=0, bdate="", country="", city=""):
+                 verified=0, sex=0, bdate="", country="", city="",
+                 wall=Wall()):
         self.id = id
         self.first_name = first_name
         self.last_name = last_name
@@ -19,6 +33,7 @@ class User:
         self.bdate = bdate
         self.country = country
         self.city = city
+        self.wall = wall
 
     def __str__(self):
         return ("User id: {}\n".format(str(self.id)) +
@@ -31,13 +46,14 @@ class User:
                 "Amount of subscribers: " +
                 "{}\n".format(str(self.subscribers_amount)) +
                 "User verified: {}\n".format(str(self.verified)) +
-                "User link: {}\n".format(self.link))
+                "User link: {}\n".format(self.link) +
+                "User wall:\n\n{}".format(str(self.wall)))
 
 
 class Group:
     def __init__(self, id=0, name="", timestamp="",
                  subscribers_amount=0, link="", verified=0,
-                 type="", description=""):
+                 type="", description="", wall=Wall()):
         self.id = id
         self.name = name
         self.timestamp = timestamp
@@ -46,6 +62,7 @@ class Group:
         self.verified = verified
         self.type = type
         self.description = description
+        self.wall = wall
 
     def __str__(self):
         return ("Group id: {}\n".format(str(self.id)) +
@@ -55,7 +72,8 @@ class Group:
                 "Group verified: {}\n".format(str(self.verified)) +
                 "Type: {}\n".format(self.type) +
                 "Description:\n{}\n".format(self.description) +
-                "Group link: {}\n".format(self.link))
+                "Group link: {}\n".format(self.link) +
+                "Group wall:\n{}".format(str(self.wall)))
 
 
 class Attachments:
@@ -93,32 +111,7 @@ class Post:
                 "Link: {}\n".format(self.link))
 
 
-class User_Wall:
-    def __init__(self, user=User(), posts=[], timestamp="", link=""):
-        self.user = user
-        self.posts = posts
-        self.timestamp = timestamp
-        self.link = link
 
-    def __str__(self):
-        return ("User id: {}\n".format(self.user.id) +
-                "User name: {}\n".format(self.user.name) +
-                "Amount of posts: {}\n".format(str(len(self.posts))) +
-                "Wall link: {}\n".format(self.link))
-
-
-class Group_Wall:
-    def __init__(self, group=Group(), posts=[], timestamp="", link=""):
-        self.group = group
-        self.posts = posts
-        self.timestamp = timestamp
-        self.link = link
-
-    def __str__(self):
-        return ("Group id: {}\n".format(self.group.id) +
-                "Group name: {}\n".format(self.group.name) +
-                "Amount of posts: {}\n".format(str(len(self.posts))) +
-                "Wall link: {}\n".format(self.link))
 
 
 class Photo:
