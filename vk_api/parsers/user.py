@@ -14,11 +14,18 @@ def get_user_id(user):
         print("Problem occured while getting user id")
 
 
-def get_user_name(user):
+def get_user_first_name(user):
     try:
-        return user["first_name"] + " " + user["last_name"]
+        return user["first_name"]
     except:
-        print("Problem occured while getting user name")
+        print("Problem occured while getting user first name")
+
+
+def get_user_last_name(user):
+    try:
+        return user["last_name"]
+    except:
+        print("Problem occured while getting user last name")
 
 
 def get_friends_amount(vk_api, user):
@@ -37,6 +44,13 @@ def get_subscribers_amount(user):
         print("Problem occured while getting subscribers amount")
 
 
+def get_user_verified(user):
+    try:
+        return user["verified"]
+    except:
+        print("Problem occured while getting subscribers amount")
+
+
 def get_user_link(user):
     try:
         return "https://vk.com/id" + get_user_id(user)
@@ -46,14 +60,17 @@ def get_user_link(user):
 
 def parse_user(vk_api, user):
     id = get_user_id(user)
-    name = get_user_name(user)
+    first_name = get_user_first_name(user)
+    last_name = get_user_last_name(user)
     timestamp = get_current_timestamp()
     friends_amount = get_friends_amount(vk_api, user)
     subscribers_amount = get_subscribers_amount(user)
+    verified = get_user_verified(user)
     link = get_user_link(user)
 
-    parsed_user = User(id=id, name=name, timestamp=timestamp,
-                       friends_amount=friends_amount, link=link,
+    parsed_user = User(id=id, first_name=first_name, last_name=last_name,
+                       timestamp=timestamp, link=link, verified=verified,
+                       friends_amount=friends_amount,
                        subscribers_amount=subscribers_amount)
 
     print(parsed_user)
@@ -66,7 +83,7 @@ def parse_user_pages(user_ids):
 
     users = vk_api.users.get(
         user_ids=user_ids,
-        fields=["followers_count"])
+        fields="followers_count, verified")
 
     parsed_users = [parse_user(vk_api, user) for user in users]
 

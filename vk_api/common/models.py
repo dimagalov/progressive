@@ -4,21 +4,25 @@ __author__ = 'dimagalov'
 
 
 class User:
-    def __init__(self, id="", name="", timestamp="",
-                 friends_amount="", subscribers_amount="", link=""):
+    def __init__(self, id=0, first_name="", last_name="", timestamp="",
+                 friends_amount=0, subscribers_amount=0, link="",
+                 verified=0):
         self.id = id
-        self.name = name
+        self.first_name = first_name
+        self.last_name = last_name
         self.timestamp = timestamp
         self.friends_amount = friends_amount
         self.subscribers_amount = subscribers_amount
+        self.verified = verified
         self.link = link
 
     def __str__(self):
-        return ("User id: {}\n".format(self.id) +
-                "User name: {}\n".format(self.name) +
+        return ("User id: {}\n".format(str(self.id)) +
+                "User name: {} {}\n".format(self.first_name, self.last_name) +
                 "Amount of friends: {}\n".format(str(self.friends_amount)) +
                 "Amount of subscribers: " +
                 "{}\n".format(str(self.subscribers_amount)) +
+                "User verified: {}\n".format(str(self.verified)) +
                 "User link: {}\n".format(self.link))
 
 
