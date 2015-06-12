@@ -10,7 +10,7 @@ from parsers.wall import parse_wall
 
 def get_group_id(group):
     try:
-        return group["id"]
+        return -1 * group["id"]
     except:
         print("Problem occured while getting group id")
 
@@ -85,9 +85,12 @@ def parse_group(group):
 def parse_group_pages(group_ids):
     vk_api = vk_api_authorization()
 
-    groups = vk_api.groups.getById(
-        group_ids=group_ids,
-        fields="members_count,verified,description")
+    values = {
+        "group_ids": group_ids,
+        "fields": "members_count,verified,description"
+    }
+
+    groups = vk_api.method("groups.getById", values)
 
     parsed_groups = [parse_group(group) for group in groups]
 

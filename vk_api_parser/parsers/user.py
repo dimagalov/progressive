@@ -32,7 +32,13 @@ def get_user_last_name(user):
 def get_friends_amount(vk_api, user):
     try:
         id = get_user_id(user)
-        friends = vk_api.friends.get(user_id=id)
+
+        values = {
+            "user_id": id
+        }
+
+        friends = vk_api.method("friends.get", values)
+
         return friends["count"]
     except:
         print("Problem occured while getting user friends amount")
@@ -121,9 +127,12 @@ def parse_user(vk_api, user):
 def parse_user_pages(user_ids):
     vk_api = vk_api_authorization()
 
-    users = vk_api.users.get(
-        user_ids=user_ids,
-        fields="followers_count,verified,sex,bdate,country,city")
+    values = {
+        "user_ids": user_ids,
+        "fields": "followers_count,verified,sex,bdate,country,city"
+    }
+
+    users = vk_api.method("users.get", values)
 
     parsed_users = [parse_user(vk_api, user) for user in users]
 

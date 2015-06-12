@@ -4,13 +4,14 @@ __author__ = 'dimagalov'
 
 # from common.models import Photo
 # from common.tools import timestamp_to_date
-from common.tools import vk_api_authorization
+
+# from common.tools import vk_api_authorization
 
 
-def parse_photo_page(user_id):
-    vk_api = vk_api_authorization()
-    photos = vk_api.photos.get(owner_id=user_id, album_id="wall", extended=0)
-    print(photos)
+# def parse_photo_page(user_id):
+#     vk_api = vk_api_authorization()
+#     photos = vk_api.photos.get(owner_id=user_id, album_id="wall", extended=0)
+#     print(photos)
 
 # from common.models import Photo
 # import vk_api

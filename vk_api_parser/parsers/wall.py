@@ -18,7 +18,12 @@ def parse_wall(id):
 
     vk_api = vk_api_authorization()
 
-    wall = vk_api.wall.get(owner_id=id)
+    values = {
+        "owner_id": id
+    }
+
+    wall = vk_api.method("wall.get", values)
+
     parsed_posts = [parse_post(post) for post in wall["items"]]
 
     parsed_wall = Wall(owner_id=id, posts=parsed_posts,
