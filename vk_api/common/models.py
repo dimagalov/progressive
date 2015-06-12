@@ -6,7 +6,7 @@ __author__ = 'dimagalov'
 class User:
     def __init__(self, id=0, first_name="", last_name="", timestamp="",
                  friends_amount=0, subscribers_amount=0, link="",
-                 verified=0):
+                 verified=0, sex=0, bdate="", country="", city=""):
         self.id = id
         self.first_name = first_name
         self.last_name = last_name
@@ -15,10 +15,18 @@ class User:
         self.subscribers_amount = subscribers_amount
         self.verified = verified
         self.link = link
+        self.sex = sex
+        self.bdate = bdate
+        self.country = country
+        self.city = city
 
     def __str__(self):
         return ("User id: {}\n".format(str(self.id)) +
                 "User name: {} {}\n".format(self.first_name, self.last_name) +
+                "User sex: {} (1 - female, 2 - male)\n".format(str(self.sex)) +
+                "Birthday: {}\n".format(self.bdate) +
+                "Country: {}\n".format(self.country) +
+                "City: {}\n".format(self.city) +
                 "Amount of friends: {}\n".format(str(self.friends_amount)) +
                 "Amount of subscribers: " +
                 "{}\n".format(str(self.subscribers_amount)) +
@@ -43,35 +51,6 @@ class Group:
                 "{}\n".format(str(self.subscribers_amount)) +
                 "Group verified: {}\n".format(str(self.verified)) +
                 "Group link: {}\n".format(self.link))
-
-
-class Video:
-    def __init__(self, id="", name="", owner_id="", owner_name="",
-                 timestamp="", publication_date="", length="", views_amount="",
-                 likes_amount="", link="", description=""):
-        self.id = id
-        self.name = name
-        self.owner_id = owner_id
-        self.owner_name = owner_name
-        self.timestamp = timestamp
-        self.publication_date = publication_date
-        self.length = length
-        self.views_amount = views_amount
-        self.likes_amount = likes_amount
-        self.link = link
-        self.description = description
-
-    def __str__(self):
-        return ("Video id: {}\n".format(self.id) +
-                "Video name: {}\n".format(self.name) +
-                "Video owner id: {}\n".format(self.owner_id) +
-                "Video owner name: {}\n".format(self.owner_name) +
-                "Publication date: {}\n".format(self.publication_date) +
-                "Video length: {}\n".format(self.length) +
-                "Views amount: {}\n".format(str(self.views_amount)) +
-                "Likes amount: {}\n".format(str(self.likes_amount)) +
-                "Link: {}\n".format(self.link) +
-                "Description: {}\n".format(self.description))
 
 
 class Post:
@@ -143,5 +122,34 @@ class Photo:
                 "Publication date: {}\n".format(self.publication_date) +
                 "Likes amount: {}\n".format(str(self.likes_amount)) +
                 "Reposted amount: {}\n".format(str(self.reposted_amount)) +
+                "Link: {}\n".format(self.link) +
+                "Description: {}\n".format(self.description))
+
+
+class Video:
+    def __init__(self, id="", name="", owner_id="", owner_name="",
+                 timestamp="", publication_date="", length="", views_amount="",
+                 likes_amount="", link="", description=""):
+        self.id = id
+        self.name = name
+        self.owner_id = owner_id
+        self.owner_name = owner_name
+        self.timestamp = timestamp
+        self.publication_date = publication_date
+        self.length = length
+        self.views_amount = views_amount
+        self.likes_amount = likes_amount
+        self.link = link
+        self.description = description
+
+    def __str__(self):
+        return ("Video id: {}\n".format(self.id) +
+                "Video name: {}\n".format(self.name) +
+                "Video owner id: {}\n".format(self.owner_id) +
+                "Video owner name: {}\n".format(self.owner_name) +
+                "Publication date: {}\n".format(self.publication_date) +
+                "Video length: {}\n".format(self.length) +
+                "Views amount: {}\n".format(str(self.views_amount)) +
+                "Likes amount: {}\n".format(str(self.likes_amount)) +
                 "Link: {}\n".format(self.link) +
                 "Description: {}\n".format(self.description))

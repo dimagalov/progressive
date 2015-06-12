@@ -4,7 +4,7 @@ __author__ = 'dimagalov'
 
 import vk
 import time
-import datetime
+from datetime import datetime
 from urllib.request import Request, urlopen
 from urllib.error import URLError, HTTPError
 
@@ -28,7 +28,7 @@ def get_current_timestamp():
 
 
 def timestamp_to_date(timestamp):
-    return datetime.datetime.fromtimestamp(timestamp).strftime('%Y-%m-%d %H:%M:%S')
+    return datetime.fromtimestamp(timestamp).strftime('%Y-%m-%d %H:%M:%S')
 
 
 def vk_api_authorization():

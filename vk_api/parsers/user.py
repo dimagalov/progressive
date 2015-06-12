@@ -51,6 +51,34 @@ def get_user_verified(user):
         print("Problem occured while getting user verification")
 
 
+def get_user_sex(user):
+    try:
+        return user["sex"]
+    except:
+        print("Problem occured while getting user sex")
+
+
+def get_user_bdate(user):
+    try:
+        return user["bdate"]
+    except:
+        print("Problem occured while getting user bdate")
+
+
+def get_user_country(user):
+    try:
+        return user["country"]["title"]
+    except:
+        print("Problem occured while getting user country")
+
+
+def get_user_city(user):
+    try:
+        return user["city"]["title"]
+    except:
+        print("Problem occured while getting user city")
+
+
 def get_user_link(user):
     try:
         return "https://vk.com/id" + get_user_id(user)
@@ -67,11 +95,16 @@ def parse_user(vk_api, user):
     subscribers_amount = get_subscribers_amount(user)
     verified = get_user_verified(user)
     link = get_user_link(user)
+    sex = get_user_sex(user)
+    bdate = get_user_bdate(user)
+    country = get_user_country(user)
+    city = get_user_city(user)
 
     parsed_user = User(id=id, first_name=first_name, last_name=last_name,
                        timestamp=timestamp, link=link, verified=verified,
-                       friends_amount=friends_amount,
-                       subscribers_amount=subscribers_amount)
+                       friends_amount=friends_amount, sex=sex,
+                       subscribers_amount=subscribers_amount,
+                       bdate=bdate, country=country, city=city)
 
     print(parsed_user)
 
@@ -83,7 +116,7 @@ def parse_user_pages(user_ids):
 
     users = vk_api.users.get(
         user_ids=user_ids,
-        fields="followers_count,verified")
+        fields="followers_count,verified,sex,bdate,country,city")
 
     parsed_users = [parse_user(vk_api, user) for user in users]
 
