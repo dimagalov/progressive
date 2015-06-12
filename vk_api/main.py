@@ -2,6 +2,6 @@
 
 __author__ = 'dimagalov'
 
-from parsers.photo import parse_photo_page
+from parsers.user import parse_user_pages
 
-parse_photo_page("dm")
+parse_user_pages("dm, dimagalov, 1")

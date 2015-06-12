@@ -1,3 +1,7 @@
+# -*- coding: utf8 -*-
+
+__author__ = 'emil.guseynov'
+
 import vk_api
 
 login, password = '', ''

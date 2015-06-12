@@ -1,3 +1,7 @@
+# -*- coding: utf8 -*-
+
+__author__ = 'dimagalov'
+
 # from common.models import Photo
 # from common.tools import timestamp_to_date
 from common.tools import vk_api_authorization

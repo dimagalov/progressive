@@ -32,6 +32,6 @@ def timestamp_to_date(timestamp):
 
 
 def vk_api_authorization():
-    app_id, login, password = 4949093, input(), input()
+    app_id, login, password = 4949093, "+79652475643", "lalka228"
     vk_api = vk.API(app_id, login, password)
     return vk_api
