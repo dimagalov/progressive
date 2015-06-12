@@ -29,10 +29,10 @@ def get_subscribers_amount(group):
 
 
 def get_group_verified(group):
-    try:
-        return group["verified"]
-    except:
-        print("Problem occured while getting group verification")
+    # try:
+    return group["verified"]
+    # except:
+        # print("Problem occured while getting group verification")
 
 
 def get_group_link(group):
@@ -64,7 +64,7 @@ def parse_group_pages(group_ids):
 
     groups = vk_api.groups.getById(
         group_ids=group_ids,
-        fields=["members_count"])
+        fields="members_count,verified")
 
     parsed_groups = [parse_group(group) for group in groups]
 

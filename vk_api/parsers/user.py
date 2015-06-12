@@ -83,7 +83,7 @@ def parse_user_pages(user_ids):
 
     users = vk_api.users.get(
         user_ids=user_ids,
-        fields="followers_count, verified")
+        fields="followers_count,verified")
 
     parsed_users = [parse_user(vk_api, user) for user in users]
 
