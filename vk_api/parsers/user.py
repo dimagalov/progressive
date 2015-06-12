@@ -48,7 +48,7 @@ def get_user_verified(user):
     try:
         return user["verified"]
     except:
-        print("Problem occured while getting subscribers amount")
+        print("Problem occured while getting user verification")
 
 
 def get_user_link(user):

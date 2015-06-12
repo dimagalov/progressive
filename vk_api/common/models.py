@@ -27,19 +27,21 @@ class User:
 
 
 class Group:
-    def __init__(self, id="", name="", timestamp="",
-                 subscribers_amount="", link=""):
+    def __init__(self, id=0, name="", timestamp="",
+                 subscribers_amount=0, link="", verified=0):
         self.id = id
         self.name = name
         self.timestamp = timestamp
         self.subscribers_amount = subscribers_amount
         self.link = link
+        self.verified = verified
 
     def __str__(self):
-        return ("Group id: {}\n".format(self.id) +
+        return ("Group id: {}\n".format(str(self.id)) +
                 "Group name: {}\n".format(self.name) +
                 "Amount of subscribers: " +
                 "{}\n".format(str(self.subscribers_amount)) +
+                "Group verified: {}\n".format(str(self.verified)) +
                 "Group link: {}\n".format(self.link))
 
 

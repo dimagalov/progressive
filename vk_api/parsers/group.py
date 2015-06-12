@@ -28,6 +28,13 @@ def get_subscribers_amount(group):
         print("Problem occured while getting subscribers amount")
 
 
+def get_group_verified(group):
+    try:
+        return group["verified"]
+    except:
+        print("Problem occured while getting group verification")
+
+
 def get_group_link(group):
     try:
         return "https://vk.com/club" + get_group_id(group)
@@ -40,10 +47,12 @@ def parse_group(group):
     name = get_group_name(group)
     timestamp = get_current_timestamp()
     subscribers_amount = get_subscribers_amount(group)
+    verified = get_group_verified(group)
     link = get_group_link(group)
 
     parsed_group = Group(id=id, name=name, timestamp=timestamp, link=link,
-                         subscribers_amount=subscribers_amount)
+                         subscribers_amount=subscribers_amount,
+                         verified=verified)
 
     print(parsed_group)
 
