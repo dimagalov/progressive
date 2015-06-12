@@ -29,10 +29,10 @@ def get_subscribers_amount(group):
 
 
 def get_group_verified(group):
-    # try:
-    return group["verified"]
-    # except:
-        # print("Problem occured while getting group verification")
+    try:
+        return group["verified"]
+    except:
+        print("Problem occured while getting group verification")
 
 
 def get_group_link(group):
