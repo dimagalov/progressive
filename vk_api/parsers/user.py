@@ -9,7 +9,7 @@ from common.tools import get_current_timestamp
 
 def get_user_id(user):
     try:
-        return str(user["id"])
+        return user["id"]
     except:
         print("Problem occured while getting user id")
 
@@ -30,7 +30,7 @@ def get_user_last_name(user):
 
 def get_friends_amount(vk_api, user):
     try:
-        id = int(get_user_id(user))
+        id = get_user_id(user)
         friends = vk_api.friends.get(user_id=id)
         return friends["count"]
     except:
@@ -81,7 +81,7 @@ def get_user_city(user):
 
 def get_user_link(user):
     try:
-        return "https://vk.com/id" + get_user_id(user)
+        return "https://vk.com/id" + str(get_user_id(user))
     except:
         print("Problem occured while getting user link")
 

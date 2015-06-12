@@ -9,7 +9,7 @@ from common.tools import get_current_timestamp
 
 def get_group_id(group):
     try:
-        return str(group["id"])
+        return group["id"]
     except:
         print("Problem occured while getting group id")
 
@@ -51,7 +51,7 @@ def get_group_description(group):
 
 def get_group_link(group):
     try:
-        return "https://vk.com/club" + get_group_id(group)
+        return "https://vk.com/club" + str(get_group_id(group))
     except:
         print("Problem occured while getting group link")
 
