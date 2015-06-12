@@ -58,22 +58,36 @@ class Group:
                 "Group link: {}\n".format(self.link))
 
 
+class Attachments:
+    def __init__(self, amount=0, list_of_attachments=[]):
+        pass
+
+
 class Post:
-    def __init__(self, id="", author=User(), timestamp="", publication_date="",
-                 likes_amount="", reposts_amount="", link=""):
+    def __init__(self, id=0, owner_id=0, author_id=0, timestamp="",
+                 publication_date="", text="", likes_amount="",
+                 reposts_amount="", post_type="", link="",
+                 attachments=Attachments()):
         self.id = id
-        self.author = author
+        self.owner_id = owner_id
+        self.author_id = author_id
         self.timestamp = timestamp
         self.publication_date = publication_date
+        self.text = text
         self.likes_amount = likes_amount
         self.reposts_amount = reposts_amount
+        self.post_type = post_type
         self.link = link
+        self.attachments = attachments
 
     def __str__(self):
-        return ("Post id: {}\n".format(self.id) +
-                "Post author name: {}\n".format(self.author.name) +
-                "Post author id: {}\n".format(self.author.id) +
+        return ("Post id: {}\n".format(str(self.id)) +
+                "Post type: {}\n".format(self.post_type) +
+                "Post owner id: {}\n".format(str(self.owner_id)) +
+                "Post author id: {}\n".format(str(self.author_id)) +
                 "Publication date: {}\n".format(self.publication_date) +
+                "Text:\n{}\n".format(self.text) +
+                "Attachments:\n{}\n".format(str(self.attachments)) +
                 "Likes amount: {}\n".format(str(self.likes_amount)) +
                 "Reposts amount: {}\n".format(str(self.reposts_amount)) +
                 "Link: {}\n".format(self.link))
