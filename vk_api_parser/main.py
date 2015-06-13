@@ -3,14 +3,14 @@
 __author__ = 'dimagalov'
 
 
-# from parsers.user import parse_user_pages
+from parsers.user import parse_user_pages
 # from parsers.group import parse_group_pages
 
-# durov = parse_user_pages("durov")[0]
-# print(durov)
+dimagalov = parse_user_pages("dimagalov")[0]
+print(dimagalov)
 
-# for post in durov.wall.posts:
-#     print(post)
+for post in dimagalov.wall.posts:
+    print(post)
 
 # doner = parse_group_pages("topdonersuka")[0]
 # print(doner)

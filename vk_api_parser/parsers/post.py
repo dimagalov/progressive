@@ -4,6 +4,7 @@ __author__ = 'dimagalov'
 
 from common.models import Post
 from common.tools import get_current_timestamp
+from common.models import Attachments
 
 
 def get_post_id(post):
@@ -72,7 +73,11 @@ def get_post_link(post):
 
 def get_post_attachments(post):
     try:
-        return post["attachments"]
+        list_of_attachments = post["attachments"]
+        try:
+            return Attachments(list_of_attachments=list_of_attachments)
+        except:
+            print("Problem occured while parsing attachments")
     except:
         pass
 

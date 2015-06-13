@@ -8,12 +8,12 @@ from common.tools import vk_api_authorization
 
 class Photo:
     def __init__(self, id=0, owner_id=0, timestamp="", publication_date="",
-                 likes=0, link="", description=""):
+                 likes_amount=0, link="", description=""):
         self.id = id
         self.owner_id = owner_id
         self.timestamp = timestamp
         self.publication_date = publication_date
-        self.likes_amount = likes
+        self.likes_amount = likes_amount
         self.link = link
         self.description = description
 
@@ -96,7 +96,7 @@ class Link:
 
 
 class Attachments:
-    def __init__(self, amount=0, list_of_attachments=[]):
+    def __init__(self, list_of_attachments=[]):
         self.amount = 0
         self.list_of_attachments = []
 
@@ -124,7 +124,7 @@ class Attachments:
                     "extended": 1
                 }
 
-                extended_info = vk_api.method("photos.getById", values)
+                extended_info = vk_api.method("photos.getById", values)[0]
                 likes_amount = extended_info["likes"]["count"]
 
                 parsed_photo = Photo(
@@ -176,7 +176,8 @@ class Attachments:
                 title = video["title"]
                 description = video["description"]
                 duration = video["duration"]
-                link = video["link"]
+                link = "https://vk.com/video{}_{}".format(
+                    str(owner_id), str(id))
                 publication_date = video["date"]
                 views_amount = video["views"]
 
@@ -207,6 +208,13 @@ class Attachments:
 
             else:
                 pass
+
+    def __str__(self):
+        result = ""
+        for attachment in self.list_of_attachments:
+            result += "\nType: {}\n".format(str(type(attachment)))
+            result += "{}\n".format(str(attachment))
+        return result
 
 
 class Post:

@@ -19,7 +19,8 @@ def parse_wall(id):
     vk_api = vk_api_authorization()
 
     values = {
-        "owner_id": id
+        "owner_id": id,
+        "filter": "owner"
     }
 
     wall = vk_api.method("wall.get", values)
