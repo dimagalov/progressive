@@ -9,6 +9,17 @@ from common.tools import vk_api_authorization
 class Photo:
     def __init__(self, id=0, owner_id=0, timestamp="", publication_date="",
                  likes_amount=0, link="", description=""):
+
+        """
+        :param               id: unique vk id of the photo [int]
+        :param         owner_id: unique vk id of the photo owner [int]
+        :param        timestamp: timestamp, which shows aggregation time [str]
+        :param publication_date: timestamp, which shows publication time [str]
+        :param     likes_amount: amount of users, who liked the photo [int]
+        :param             link: link to the photo [str]
+        :param      description: description of the picture [str]
+        """
+
         self.id = id
         self.owner_id = owner_id
         self.timestamp = timestamp
@@ -29,6 +40,21 @@ class Photo:
 class Audio:
     def __init__(self, id=0, owner_id=0, artist="", title="", timestamp="",
                  duration=0, link="", lyrics_id=0, album_id=0, genre_id=0):
+
+        """
+        :param           id: unique vk id of the audio [int]
+        :param     owner_id: unique vk id of the audio owner [int]
+        :param       artist: name of the song performer [str]
+        :param        title: name of the song [str]
+        :param    timestamp: timestamp, which shows aggregation time [str]
+        :param     duration: song duration in seconds [int]
+        :param         link: link to the song [string]
+        :param    lyrics_id: unique vk id of the lyrics [int]
+        :param     album_id: unique vk id of the album [int]
+        :param     genre_id: unique vk id of the genre [int]
+                   (check https://vk.com/dev/audio_genres for genres info)
+        """
+
         self.id = id
         self.artist = artist
         self.title = title
@@ -56,6 +82,20 @@ class Video:
     def __init__(self, id=0, title="", owner_id=0, timestamp="",
                  publication_date="", duration=0, views_amount=0,
                  likes_amount=0, link="", description=""):
+
+        """
+        :param               id: unique vk id of the video [int]
+        :param            title: name of the video [str]
+        :param         owner_id: unique vk id of the video owner [int]
+        :param        timestamp: timestamp, which shows aggregation time [str]
+        :param publication_date: timestamp, which shows publication time [str]
+        :param         duration: video duration in seconds [int]
+        :param     views_amount: amount of users, who watched the video [int]
+        :param     likes_amount: amount of users, who liked the video [int]
+        :param             link: link to the video [str]
+        :param      description: description of the video [str]
+        """
+
         self.id = id
         self.owner_id = owner_id
         self.title = title
@@ -82,6 +122,15 @@ class Video:
 class Link:
     def __init__(self, url="", title="", description="", image_src="",
                  timestamp=""):
+
+        """
+        :param         url: url of the link [str]
+        :param       title: title of the link [str]
+        :param description: description of the link [str]
+        :param   image_src: link to the image shown with the description [str]
+        :param   timestamp: timestamp, which shows aggregation time [str]
+        """
+
         self.url = url
         self.title = title
         self.timestamp = timestamp
@@ -97,6 +146,12 @@ class Link:
 
 class Attachments:
     def __init__(self, list_of_attachments=[]):
+
+        """
+        :param list_of_attachments: everything attached to the post
+               [list of instances of (Photo|Audio|Video|Link) classes]
+        """
+
         self.amount = 0
         self.list_of_attachments = []
 
@@ -222,6 +277,22 @@ class Post:
                  publication_date="", text="", likes_amount=0,
                  reposts_amount=0, post_type="", link="",
                  attachments=Attachments()):
+
+        """
+        :param               id: unique vk id of the post [int]
+        :param         owner_id: unique vk id of the post owner [int]
+        :param         owner_id: unique vk id of the post author [int]
+        :param        timestamp: timestamp, which shows aggregation time [str]
+        :param publication_date: timestamp, which shows publication time [str]
+        :param             text: text in the post [str]
+        :param     likes_amount: amount of users, who liked the post [int]
+        :param   reposts_amount: amount of users, who reposted the post [int]
+        :param        post_type: type of the post [str] (possible values:
+                                 [post, copy, reply, postpone, suggest])
+        :param             link: link to the post [str]
+        :param      attachments: everything attached to the post [Attachments]
+        """
+
         self.id = id
         self.owner_id = owner_id
         self.author_id = author_id
@@ -249,6 +320,14 @@ class Post:
 
 class Wall:
     def __init__(self, owner_id=0, posts=[], timestamp="", link=""):
+
+        """
+        :param  owner_id: unique vk id of the wall owner [int]
+        :param     posts: list of posts on the wall [list of Post instances]
+        :param timestamp: timestamp, which shows aggregation time [str]
+        :param      link: link to the wall [str]
+        """
+
         self.owner_id = owner_id
         self.posts = posts
         self.timestamp = timestamp
@@ -265,6 +344,24 @@ class User:
                  friends_amount=0, subscribers_amount=0, link="",
                  verified=0, sex=0, bdate="", country="", city="",
                  wall=Wall()):
+
+        """
+        :param                   id: unique vk id of the user [int]
+        :param           first_name: first name of the user [str]
+        :param            last_name: last name of the user [str]
+        :param            timestamp: shows aggregation time [str]
+        :param       friends_amount: amount of user's friends [int]
+        :param   subscribers_amount: amount of user's subscribers [int]
+        :param                 link: link to the user [str]
+        :param             verified: indicates verified vk users [int->(0|1)]
+        :param                  sex: user's sex [int]
+                                     (1 - female, 2 - male, 0 - unknown)
+        :param                bdate: timestamp, shows user's birthday [str]
+        :param              country: country, where user lives [str]
+        :param                 city: city, where user lives [str]
+        :param                 wall: user's wall [Wall]
+        """
+
         self.id = id
         self.first_name = first_name
         self.last_name = last_name
@@ -298,6 +395,19 @@ class Group:
     def __init__(self, id=0, name="", timestamp="",
                  subscribers_amount=0, link="", verified=0,
                  type="", description="", wall=Wall()):
+
+        """
+        :param                   id: unique vk id of the group [int]
+        :param                 name: name of the group [str]
+        :param            timestamp: shows aggregation time [str]
+        :param   subscribers_amount: amount of group subscribers [int]
+        :param                 link: link to the group [str]
+        :param             verified: indicates verified vk groups [int->(0|1)]
+        :param                 type: group type [str->(group|page|event)]
+        :param          description: description of the group [str]
+        :param                 wall: group wall [Wall]
+        """
+
         self.id = id
         self.name = name
         self.timestamp = timestamp
