@@ -10,6 +10,11 @@ from urllib.error import URLError, HTTPError
 
 
 def open_url(url):
+
+    """
+    Open url and handle all the possible errors
+    """
+
     request = Request(url)
     try:
         response = urlopen(request)
@@ -24,19 +29,43 @@ def open_url(url):
 
 
 def get_current_timestamp():
+
+    """
+    Returns current timestamp in Unix format
+    """
+
     return int(time.time())
 
 
 def timestamp_to_date(timestamp):
+
+    """
+    Convert Unix timestamp to readable date and time string
+    """
+
     return datetime.fromtimestamp(timestamp).strftime('%Y-%m-%d %H:%M:%S')
 
 
 def captcha_handler(captcha):
+
+    """
+    This handler makes it possible to get rid of captchas, which sometimes
+    stop parsers from getting information.
+
+    TODO: embed external application, cause handling captchas manually sucks.
+    """
+
     key = input("Enter Captcha {0}: ".format(captcha.get_url())).strip()
     return captcha.try_again(key)
 
 
 def vk_api_authorization():
+
+    """
+    Simple authorization which makes it possible to
+    get access to VK API via fake user and custom application.
+    """
+
     app_id, login, password = 4949093, "+79652475643", "lalka228"
     vk = vk_api.VkApi(login=login, password=password, app_id=app_id,
                       captcha_handler=captcha_handler)
