@@ -4,52 +4,72 @@ __author__ = 'dimagalov'
 
 
 class Photo:
-    def __init__(self, id="", owner_id="", owner_name="", timestamp="",
-                 publication_date="", likes="", reposts="", link="", desc=""):
+    def __init__(self, id=0, owner_id=0, timestamp="", publication_date="",
+                 likes=0, link="", description=""):
         self.id = id
-        self.owner_name = owner_name
         self.owner_id = owner_id
         self.timestamp = timestamp
         self.publication_date = publication_date
         self.likes_amount = likes
-        self.reposted_amount = reposts
-        self.link = link
-        self.description = desc
-
-    def __str__(self):
-        return ("Photo id: {}\n".format(self.id) +
-                "Photo owner id: {}\n".format(self.owner_id) +
-                "Photo owner name: {}\n".format(self.owner_name) +
-                "Publication date: {}\n".format(self.publication_date) +
-                "Likes amount: {}\n".format(str(self.likes_amount)) +
-                "Reposted amount: {}\n".format(str(self.reposted_amount)) +
-                "Link: {}\n".format(self.link) +
-                "Description: {}\n".format(self.description))
-
-
-class Video:
-    def __init__(self, id="", name="", owner_id="", owner_name="",
-                 timestamp="", publication_date="", length="", views_amount="",
-                 likes_amount="", link="", description=""):
-        self.id = id
-        self.name = name
-        self.owner_id = owner_id
-        self.owner_name = owner_name
-        self.timestamp = timestamp
-        self.publication_date = publication_date
-        self.length = length
-        self.views_amount = views_amount
-        self.likes_amount = likes_amount
         self.link = link
         self.description = description
 
     def __str__(self):
-        return ("Video id: {}\n".format(self.id) +
-                "Video name: {}\n".format(self.name) +
-                "Video owner id: {}\n".format(self.owner_id) +
-                "Video owner name: {}\n".format(self.owner_name) +
+        return ("Photo id: {}\n".format(str(self.id)) +
+                "Photo owner id: {}\n".format(str(self.owner_id)) +
                 "Publication date: {}\n".format(self.publication_date) +
-                "Video length: {}\n".format(self.length) +
+                "Likes amount: {}\n".format(str(self.likes_amount)) +
+                "Link: {}\n".format(self.link) +
+                "Description: {}\n".format(self.description))
+
+
+class Audio:
+    def __init__(self, id=0, owner_id=0, artist="", title="", timestamp="",
+                 duration=0, link="", lyrics_id=0, album_id=0, genre_id=0):
+        self.id = id
+        self.artist = artist
+        self.title = title
+        self.owner_id = owner_id
+        self.timestamp = timestamp
+        self.duration = duration
+        self.link = link
+        self.lyrics_id = lyrics_id
+        self.album_id = album_id
+        self.genre_id = genre_id
+
+    def __str__(self):
+        return ("Audio id: {}\n".format(str(self.id)) +
+                "Audio owner id: {}\n".format(str(self.owner_id)) +
+                "Artist: {}\n".format(self.artist) +
+                "Title: {}\n".format(self.title) +
+                "Duration: {}\n".format(str(self.duration)) +
+                "Link: {}\n".format(self.link) +
+                "Lyrics id: {}\n".format(str(self.lyrics_id)) +
+                "Album id: {}\n".format(str(self.album_id)) +
+                "Genre id: {}\n".format(str(self.genre_id)))
+
+
+class Video:
+    def __init__(self, id=0, title="", owner_id=0, timestamp="",
+                 publication_date="", duration=0, views_amount=0,
+                 likes_amount=0, link="", description=""):
+        self.id = id
+        self.owner_id = owner_id
+        self.title = title
+        self.timestamp = timestamp
+        self.description = description
+        self.duration = duration
+        self.link = link
+        self.publication_date = publication_date
+        self.views_amount = views_amount
+        self.likes_amount = likes_amount
+
+    def __str__(self):
+        return ("Video id: {}\n".format(str(self.id)) +
+                "Video owner id: {}\n".format(str(self.owner_id)) +
+                "Title: {}\n".format(self.title) +
+                "Duration: {}\n".format(str(self.duration)) +
+                "Publication date: {}\n".format(self.publication_date) +
                 "Views amount: {}\n".format(str(self.views_amount)) +
                 "Likes amount: {}\n".format(str(self.likes_amount)) +
                 "Link: {}\n".format(self.link) +
@@ -58,13 +78,30 @@ class Video:
 
 class Attachments:
     def __init__(self, amount=0, list_of_attachments=[]):
-        pass
+        self.amount = 0
+        self.list_of_attachments = []
+
+        for attachment in list_of_attachments:
+            if attachment["type"] == "photo":
+                self.amount += 1
+                photo = Photo()
+                self.list_of_attachments.append(photo)
+            elif attachment["type"] == "audio":
+                self.amount += 1
+                audio = Audio()
+                self.list_of_attachments.append(audio)
+            elif attachment["type"] == "video":
+                self.amount += 1
+                video = Video()
+                self.list_of_attachments.append(video)
+            else:
+                pass
 
 
 class Post:
     def __init__(self, id=0, owner_id=0, author_id=0, timestamp="",
-                 publication_date="", text="", likes_amount="",
-                 reposts_amount="", post_type="", link="",
+                 publication_date="", text="", likes_amount=0,
+                 reposts_amount=0, post_type="", link="",
                  attachments=Attachments()):
         self.id = id
         self.owner_id = owner_id
