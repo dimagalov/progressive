@@ -2,6 +2,9 @@
 
 __author__ = 'dimagalov'
 
+from common.tools import get_current_timestamp
+from common.tools import vk_api_authorization
+
 
 class Photo:
     def __init__(self, id=0, owner_id=0, timestamp="", publication_date="",
@@ -98,22 +101,110 @@ class Attachments:
         self.list_of_attachments = []
 
         for attachment in list_of_attachments:
+            timestamp = get_current_timestamp()
+
             if attachment["type"] == "photo":
                 self.amount += 1
-                photo = Photo()
-                self.list_of_attachments.append(photo)
+
+                photo = attachment["photo"]
+
+                id = photo["id"]
+                owner_id = photo["owner_id"]
+                publication_date = photo["date"]
+                description = photo["text"]
+
+                link = "https://vk.com/photo{}_{}".format(
+                    str(owner_id), str(id))
+
+                vk_api = vk_api_authorization()
+
+                values = {
+                    "photos": "{}_{}".format(
+                        str(owner_id), str(id)),
+                    "extended": 1
+                }
+
+                extended_info = vk_api.method("photos.getById", values)
+                likes_amount = extended_info["likes"]["count"]
+
+                parsed_photo = Photo(
+                    id=id, owner_id=owner_id, timestamp=timestamp,
+                    publication_date=publication_date, description=description,
+                    link=link, likes_amount=likes_amount)
+
+                self.list_of_attachments.append(parsed_photo)
+
             elif attachment["type"] == "posted_photo":
                 self.amount += 1
-                photo = Photo()
-                self.list_of_attachments.append(photo)
+                photo = attachment["posted_photo"]
+
+                id = photo["id"]
+                owner_id = photo["owner_id"]
+                link = photo["photo_604"]
+
+                parsed_photo = Photo(id=id, owner_id=owner_id, link=link)
+
+                self.list_of_attachments.append(parsed_photo)
+
             elif attachment["type"] == "audio":
                 self.amount += 1
-                audio = Audio()
-                self.list_of_attachments.append(audio)
+                audio = attachment["audio"]
+
+                id = audio["id"]
+                artist = audio["artist"]
+                title = audio["title"]
+                owner_id = audio["owner_id"]
+                duration = audio["duration"]
+                link = audio["url"]
+                lyrics_id = audio["lyrics_id"]
+                album_id = audio["album_id"]
+                genre_id = audio["genre_id"]
+
+                parsed_audio = Audio(
+                    id=id, owner_id=owner_id, timestamp=timestamp,
+                    artist=artist, title=title, duration=duration, link=link,
+                    lyrics_id=lyrics_id, album_id=album_id, genre_id=genre_id)
+
+                self.list_of_attachments.append(parsed_audio)
+
             elif attachment["type"] == "video":
                 self.amount += 1
-                video = Video()
-                self.list_of_attachments.append(video)
+                video = attachment["video"]
+
+                id = video["id"]
+                owner_id = video["owner_id"]
+                title = video["title"]
+                description = video["description"]
+                duration = video["duration"]
+                link = video["link"]
+                publication_date = video["date"]
+                views_amount = video["views"]
+
+                likes_amount = -1
+
+                parsed_video = Video(
+                    id=id, owner_id=owner_id, timestamp=timestamp,
+                    title=title, duration=duration, link=link,
+                    description=description, publication_date=publication_date,
+                    views_amount=views_amount, likes_amount=likes_amount)
+
+                self.list_of_attachments.append(parsed_video)
+
+            elif attachment["type"] == "link":
+                self.amount += 1
+                link = attachment["link"]
+
+                url = link["url"]
+                title = link["title"]
+                description = link["description"]
+                image_src = link["image_src"]
+
+                parsed_link = Link(url=url, title=title,
+                                   description=description,
+                                   image_src=image_src)
+
+                self.list_of_attachments.append(parsed_link)
+
             else:
                 pass
 
