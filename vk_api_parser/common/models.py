@@ -76,6 +76,22 @@ class Video:
                 "Description: {}\n".format(self.description))
 
 
+class Link:
+    def __init__(self, url="", title="", description="", image_src="",
+                 timestamp=""):
+        self.url = url
+        self.title = title
+        self.timestamp = timestamp
+        self.description = description
+        self.image_src = image_src
+
+    def __str__(self):
+        return ("Link url: {}\n".format(self.url) +
+                "Title: {}\n".format(self.title) +
+                "Description: {}\n".format(self.description) +
+                "Image src: {}\n".format(self.image_src))
+
+
 class Attachments:
     def __init__(self, amount=0, list_of_attachments=[]):
         self.amount = 0
@@ -83,6 +99,10 @@ class Attachments:
 
         for attachment in list_of_attachments:
             if attachment["type"] == "photo":
+                self.amount += 1
+                photo = Photo()
+                self.list_of_attachments.append(photo)
+            elif attachment["type"] == "posted_photo":
                 self.amount += 1
                 photo = Photo()
                 self.list_of_attachments.append(photo)
