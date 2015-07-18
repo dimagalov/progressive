@@ -4,7 +4,7 @@ __author__ = 'emil.guseynov'
 
 import vk_api
 
-login, password = '', ''
+login, password = '+79652475643', 'lalka228'
 vk = vk_api.VkApi(login, password)
 vk.authorization()
 tools = vk_api.VkTools(vk)
@@ -134,6 +134,9 @@ for i, gr in enumerate(ranked_groups):
 print('---------\n\n')
 
 people = list(map(int, set(people)))  # remove duplicates
+for item in people:
+    print(item, end=',')
+
 ranked_users = rank_users(people)
 print(len(ranked_users))
 for i, user in enumerate(ranked_users):

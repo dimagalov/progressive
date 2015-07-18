@@ -3,7 +3,7 @@
 __author__ = 'dimagalov'
 
 from common.tools import get_current_timestamp
-from common.models import Wall
+from common.models_db import Wall
 from common.tools import vk_api_authorization
 from parsers.post import parse_post
 
@@ -24,7 +24,7 @@ def parse_wall(id):
     }
 
     wall = vk_api.method("wall.get", values)
-
+    print(len(wall["items"]))
     parsed_posts = [parse_post(post) for post in wall["items"]]
 
     parsed_wall = Wall(owner_id=id, posts=parsed_posts,

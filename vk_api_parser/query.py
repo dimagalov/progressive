@@ -1,9 +1,7 @@
 from common.models_db import Post
-from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from config import engine
 
-
-engine = create_engine('sqlite:///sqlalchemy.db')
 db_session = sessionmaker()
 db_session.configure(bind=engine)
 session = db_session()
@@ -16,14 +14,10 @@ def delete_post(post_id):
 
 
 def add_post(post):
-    #print(post)
-    '''
     session.add(post)
-    for attachment in post.attachments.list_of_attachments:
+
+    for attachment in post.attachments.get():
         attachment.post_id = post.id
         session.add(attachment)
 
     session.commit()
-    '''
-    #print (post.attachments)
-    pass

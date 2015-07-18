@@ -2,9 +2,10 @@
 
 __author__ = 'dimagalov'
 
-from common.models import Post
+from common.models_db import Post
 from common.tools import get_current_timestamp
-from common.models import Attachments
+from common.models_db import Attachments
+from database.query import add_post
 
 
 def get_post_id(post):
@@ -94,11 +95,14 @@ def parse_post(post):
     post_type = get_post_type(post)
     link = get_post_link(post)
     attachments = get_post_attachments(post)
-
     parsed_post = Post(id=id, owner_id=owner_id, author_id=author_id,
                        timestamp=timestamp, publication_date=publication_date,
                        text=text, likes_amount=likes_amount,
                        reposts_amount=reposts_amount, post_type=post_type,
                        link=link, attachments=attachments)
+
+
+    add_post(parsed_post)
+    print ("post added")
 
     return parsed_post

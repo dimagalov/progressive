@@ -163,6 +163,7 @@ class Attachments:
                [list of instances of (Photo|Audio|Video|Link) classes]
         """
 
+
         self.amount = 0
         self.list_of_attachments = []
 
@@ -199,7 +200,7 @@ class Attachments:
                     link=link, likes_amount=likes_amount)
 
                 self.list_of_attachments.append(parsed_photo)
-
+        
             elif attachment["type"] == "posted_photo":
                 self.amount += 1
                 photo = attachment["posted_photo"]
@@ -274,6 +275,9 @@ class Attachments:
 
             else:
                 pass
+
+    def get(self):
+        return self.list_of_attachments
 
     def __str__(self):
         result = ""
@@ -434,7 +438,3 @@ class Group:
                 "Description:\n{}\n".format(self.description) +
                 "Group link: {}\n".format(self.link) +
                 "Group wall:\n{}".format(str(self.wall)))
-
-
-def get_base():
-    return Base

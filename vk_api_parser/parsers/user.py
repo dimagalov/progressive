@@ -3,7 +3,7 @@
 __author__ = 'dimagalov'
 
 from common.tools import vk_api_authorization
-from common.models import User
+from common.models_db import User
 from common.tools import get_current_timestamp
 from parsers.wall import parse_wall
 
