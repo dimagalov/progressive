@@ -66,7 +66,7 @@ def vk_api_authorization():
     get access to VK API via fake user and custom application.
     """
 
-    app_id, login, password = 2895443, "emilchess@mail.ru", "Emilka1996"
+    app_id, login, password = 4949093, "+79652475643", "lalka228"
     vk = vk_api.VkApi(login=login, password=password, app_id=app_id,
                       captcha_handler=captcha_handler)
 
