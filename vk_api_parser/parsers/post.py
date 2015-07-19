@@ -101,8 +101,4 @@ def parse_post(post):
                        reposts_amount=reposts_amount, post_type=post_type,
                        link=link, attachments=attachments)
 
-
-    add_post(parsed_post)
-    print ("post added")
-
     return parsed_post

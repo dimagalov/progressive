@@ -118,15 +118,15 @@ class Video(Base):
     
 
     def __str__(self):
-        return ("Video id: {}\n".format(str(id)) +
-                "Video owner id: {}\n".format(str(owner_id)) +
-                "Title: {}\n".format(title) +
-                "Duration: {}\n".format(str(duration)) +
-                "Publication date: {}\n".format(publication_date) +
-                "Views amount: {}\n".format(str(views_amount)) +
-                "Likes amount: {}\n".format(str(likes_amount)) +
-                "Link: {}\n".format(link) +
-                "Description: {}\n".format(description))
+        return ("Video id: {}\n".format(str(self.id)) +
+                "Video owner id: {}\n".format(str(self.owner_id)) +
+                "Title: {}\n".format(self.title) +
+                "Duration: {}\n".format(str(self.duration)) +
+                "Publication date: {}\n".format(self.publication_date) +
+                "Views amount: {}\n".format(str(self.views_amount)) +
+                "Likes amount: {}\n".format(str(self.likes_amount)) +
+                "Link: {}\n".format(self.link) +
+                "Description: {}\n".format(self.description))
 
 
 class Link(Base):
@@ -163,9 +163,10 @@ class Attachments:
                [list of instances of (Photo|Audio|Video|Link) classes]
         """
 
-
         self.amount = 0
         self.list_of_attachments = []
+        
+        return ###############################
 
         for attachment in list_of_attachments:
             timestamp = get_current_timestamp()
