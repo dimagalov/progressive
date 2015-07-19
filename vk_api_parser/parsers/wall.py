@@ -17,6 +17,10 @@ def parse_wall(id):
     ''' WARNING! parse_wall takes only id, not a screen name '''
 
     vk_api = vk_api_authorization()
+    
+    if vk_api == None:
+        print('Something went wrong. Maybe wrong credentials?')
+        exit(0)
 
     values = {
         "owner_id": id,
