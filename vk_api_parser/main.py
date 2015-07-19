@@ -5,5 +5,7 @@ __author__ = 'dimagalov'
 #from database.query import add_post
 from parsers.wall import parse_wall
 
+import database.create_db
+
 res = parse_wall(53083705)
 print (res)
