@@ -3,7 +3,11 @@
 __author__ = 'dimagalov'
 
 #from database.query import add_post
-from parsers.wall import parse_wall
+# from parsers.wall import parse_wall
 
-res = parse_wall(53083705)
-print (res)
+# res = parse_wall(53083705)
+# print (res)
+
+from aggregator.aggregator import get_users, aggregator
+
+aggregator(get_users('users_club_22079806'))
