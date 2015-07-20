@@ -48,6 +48,7 @@ def main():
         debug=True
         )
     app.listen(8888)
+    print ('server is listening on port 8888')
     tornado.ioloop.IOLoop.current().start()
 
 
