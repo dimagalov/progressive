@@ -9,5 +9,9 @@ __author__ = 'dimagalov'
 # print (res)
 
 from aggregator.aggregator import get_users, aggregator
+from database.query import delete_all
 
-aggregator(get_users('users_club_22079806'))
+
+delete_all() # проблемы с повторным добавлением уже существующего, пока не оч ясно, как чинить
+
+aggregator(get_users('users_club_22079806'), log = 1)

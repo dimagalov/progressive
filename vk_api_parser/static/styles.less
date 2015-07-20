@@ -1,0 +1,252 @@
+@base-color: #43CE85;
+@light-color: lighten(@base-color, 30%);
+@hover-color: darken(white, 5%);
+@link-color: rgba(255, 255, 255, 0.8);
+
+
+.b-l() {
+    display: block;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+.block-list {
+    .b-l;
+    & > li {
+        .b-l;
+    }
+}
+
+.block-link {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.append-clearfix {
+    &::after {
+        display: block;
+        width: 0;
+        height: 0;
+        clear: both;
+        content: '';
+    }
+}
+
+body {
+    padding: 0;
+    margin: 0;
+}
+
+header {
+    display: flex;
+    flex-flow: row no-wrap;
+    align-items: center;
+    justify-content: space-around;
+
+    background: @base-color;
+    box-shadow: 0px 3px 16px 0px hsla(0, 0%, 48%, 0.56);
+    cursor: default;
+
+    margin-bottom: 1em;
+
+    .title {
+        padding: .1em;
+    }
+    @v-padding: 0.5em;
+    img.logo {
+        height: 1em + 2*@v-padding;
+    }
+
+
+    .nav, .nav-links {
+        .block-list;
+
+        display: flex;
+        flex-flow: row no-wrap;
+        align-items: center;
+
+        li {
+            a {
+                color: inherit;
+                text-decoration: none;
+            }
+            vertical-align: middle;
+        }
+    }
+
+    .nav {
+        flex-grow: 1;
+    }
+
+    .nav li {
+        color: @link-color;
+
+        margin-left: auto;
+        margin-right: auto;
+
+        a {
+            .block-link;
+            padding: @v-padding 0.1em;
+            cursor: default;
+        }
+
+        &.selected {
+            border-bottom: 2px solid @light-color;
+            margin-bottom: 2px;
+            a {
+                margin-bottom: -4px;
+            }
+        }
+        &:not(.selected) {
+            a {
+                cursor: pointer;
+            }
+
+            transition: all 0.3s;
+            &:hover {
+                background: darken(@base-color, 5%);
+                color: white;
+            }
+        }
+    }
+
+    .nav-links li {
+        padding: 1em;
+        color: @light-color;
+
+        &:hover a {
+            text-decoration: underline;
+        }
+    }
+}
+
+@media screen and (max-width: 680px) {
+    .menu-collapse {
+        position: relative;
+        width: 35px;
+        height: 35px;
+        background: blue;
+        & > * {
+            position: absolute;
+            right: 0;
+            top: 35px;
+            display: none !important;
+        }
+        &:active, &:focus, &:hover {
+            & > * {
+                display: block !important;
+            }
+        }
+    }
+    .nav-links {
+        background: @base-color;
+        li {
+            a {
+                color: @hover-color !important;
+            }
+            border: 1px solid @light-color;
+        }
+    }
+}
+
+.posts {
+
+    .append-clearfix;
+
+    width: 90%;
+    margin: auto;
+
+    .post {
+        display: block;
+        // mobile-first
+        width: 100%;
+        min-height: 20vw;
+        padding: 0.5em 0.2em;
+
+        transition: background 0.3s;
+
+        &:hover {
+            background: @hover-color;
+        }
+    }
+}
+
+@media screen and (min-width: 400px) {
+    .posts .post {
+        min-height: 45vw;
+        padding: 2em 1em;
+    }
+    header {
+        @v-padding: 1em;
+        img.logo {
+            height: 1em + 2*@v-padding;
+        }
+        .nav {
+            flex: initial;
+        }
+        .nav-links li {
+            padding: @v-padding 0.5em;
+        }
+        .nav li a {
+            padding: 1em;
+        }
+    }
+}
+
+@media screen and (min-width: 500px) {
+    .posts .post {
+        float: left;
+        // 2 in row
+        @post-width: 50%;
+        @post-height: 22vw;
+        width: @post-width;
+        min-height: @post-height;
+        padding: 10%/4 1em;
+
+        &.featured {
+            width: 2 * @post-width;
+            min-height: 2 * @post-height;
+        }
+    }
+}
+
+@media screen and (min-width: 800px) {
+    header {
+        .nav, .nav-list {
+            li {
+                margin: 0 15px;
+            }
+        }
+        .nav li a, .nav-links li {
+            padding: 1em;
+        }
+    }
+    .posts .post {
+        float: left;
+        // 3 in row
+        @post-width: 33.3%;
+        @post-height: 15vw;
+        width: @post-width;
+        min-height: @post-height;
+        padding: 10%/6 2em;
+
+        &.featured {
+            width: 2 * @post-width;
+            min-height: 2 * @post-height;
+        }
+    }
+}
+
+.post img {
+    width: 100%;
+    height: auto;
+}
+.post iframe.youtube {
+    width: 100%;
+    height: 120%;
+}

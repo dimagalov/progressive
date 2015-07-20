@@ -1,6 +1,7 @@
 from common.models_db import Post
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy import desc
 
 
 engine = create_engine('sqlite:///vk.db')
@@ -14,6 +15,12 @@ def delete_post(post_id):
     session.delete(p)
     session.commit()
 
+def delete_all():
+    try:
+        num_rows_deleted = session.query(Post).delete()
+        session.commit()
+    except:
+        session.rollback()
 
 def add_post(post):
     session.add(post)
@@ -21,7 +28,9 @@ def add_post(post):
     # for attachment in post.attachments.get():
     #     attachment.post_id = post.id
     #     session.add(attachment)
-
+    # ^
+    # ^
+    # ^
     '''
         Traceback (most recent call last):
           File "main.py", line 13, in <module>
@@ -34,3 +43,10 @@ def add_post(post):
     '''
 
     session.commit()
+
+def get_best_posts(number):
+    try:
+        number = int(number)
+    except:
+        number = 0
+    return session.query(Post).order_by(desc('timestamp')).limit(number).all()

@@ -7,6 +7,8 @@ from common.models_db import Wall
 from common.tools import vk_api_authorization
 from parsers.post import parse_post
 
+from vk_api.vk_api import ApiError
+
 
 def get_wall_link(id):
     return "https://vk.com/wall{}?own=1".format(id)
@@ -27,9 +29,12 @@ def parse_wall(id):
         "filter": "owner"
     }
 
-    wall = vk_api.method("wall.get", values)
-    
-    # print(len(wall["items"]))
+    while (1):
+        try:
+            wall = vk_api.method("wall.get", values)
+            break
+        except ApiError:
+            print ('Too many requests per second. Trying again.')
     
     parsed_posts = [parse_post(post) for post in wall["items"]]
 
