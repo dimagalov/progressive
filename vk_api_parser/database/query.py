@@ -23,26 +23,14 @@ def delete_all():
         session.rollback()
 
 def add_post(post):
-    session.add(post)
+    session.merge(post)
 
-    # for attachment in post.attachments.get():
-    #     attachment.post_id = post.id
-    #     session.add(attachment)
-    # ^
-    # ^
-    # ^
-    '''
-        Traceback (most recent call last):
-          File "main.py", line 13, in <module>
-            aggregator(get_users('users_club_22079806'))
-          File "/Users/artem/Programming/progressive/vk_api_parser/aggregator/aggregator.py", line 36, in aggregator
-            add_post(best_post)
-          File "/Users/artem/Programming/progressive/vk_api_parser/database/query.py", line 21, in add_post
-            for attachment in post.attachments.get():
-        AttributeError: 'NoneType' object has no attribute 'get'
-    '''
+    for attachment in post.attachments.get():
+        attachment.post_id = post.id
+        session.merge(attachment)
 
     session.commit()
+
 
 def get_best_posts(number):
     try:
