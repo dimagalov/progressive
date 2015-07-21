@@ -24,11 +24,6 @@ def delete_all():
 
 def add_post(post):
     session.merge(post)
-
-    for attachment in post.attachments.get():
-        attachment.post_id = post.id
-        session.merge(attachment)
-
     session.commit()
 
 
