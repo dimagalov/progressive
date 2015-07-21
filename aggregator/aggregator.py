@@ -13,7 +13,7 @@ def get_users(filename):
     for line in lines:
         args = line.split()
         for arg in args:
-            if str(arg).find('id') != -1:
+            if 'id' in str(arg):
                 results.append(str(arg)[str(arg).find('id') + 2:])
                 break
     return results
