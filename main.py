@@ -14,4 +14,4 @@ from database.query import delete_all
 
 delete_all() # проблемы с повторным добавлением уже существующего, пока не оч ясно, как чинить
 
-aggregator(get_users('users_club_22079806'), log = 1)
+aggregator(get_users('users_club_22079806'), best_post_delay = 10, max_old_post = 24 * 60 * 60, log = 1)

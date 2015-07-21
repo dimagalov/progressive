@@ -18,11 +18,9 @@ def get_users(filename):
                 break
     return results
 
-def aggregator(users, log = 0):
+def aggregator(users, best_post_delay = 10, max_old_post = 24 * 60 * 60, log = 0):
     last_time = int(time())
     best_post = None
-    best_post_delay = 10 # sec
-    max_old_post = 24 * 60 * 60 # 3 hour
     used_posts = []
 
     while (1):
