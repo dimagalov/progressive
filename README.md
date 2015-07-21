@@ -1,9 +1,15 @@
 # progressive
 Web service for smart news aggregation
 
-Библиотеки: pip install vk_api sqlalchemy
+Инструкция для запуска:
 
-Запуск: rm vk.db ; database/create_db.py && nohup web.py & nohup main.py &
+1) pip install vk_api sqlalchemy
 
-main.py складывает в БД новые посты
-web.py запускает веб-сервер
+2) rm vk.db
+
+3) python3.4 database/create_db.py
+
+4) Для запуска надо запустить web.py и main.py одновременно
+
+main.py скаладывает в БД новые посты
+web.py запускает веб сервер
