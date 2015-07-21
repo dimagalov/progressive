@@ -5,7 +5,7 @@ Web service for smart news aggregation
 pip install vk_api sqlalchemy
 
 Запуск:
-rm vk.db ; python3 database/create_db.py && web.py & main.py &
+rm vk.db ; python3 database/create_db.py && python3 web.py & python3 main.py &
 
 main.py складывает в БД новые посты
 web.py запускает веб сервер
