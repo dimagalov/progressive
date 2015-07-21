@@ -7,7 +7,7 @@ from database.query import add_post, delete_post
 from time import time
 
 def get_users(filename):
-    f = open('base/' + filename, 'r')
+    f = open('base/' + filename, 'r', encoding="utf8")
     lines = f.readlines()
     results = []
     for line in lines:
