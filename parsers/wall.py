@@ -18,9 +18,10 @@ class Wall_parser:
 
     def after_wallget(this, wall):
         parsed_posts = [parse_post(post) for post in wall["items"]]
-        parsed_wall = Wall(owner_id=this.user, posts=parsed_posts,
-                       timestamp=get_current_timestamp(),
-                       link=get_wall_link(this.user))
+        parsed_wall = Wall(owner_id=this.user,
+                           posts=parsed_posts,
+                           timestamp=get_current_timestamp(),
+                           link=get_wall_link(this.user))
 
         this.callback(parsed_wall)
 
@@ -37,9 +38,8 @@ class Wall_parser:
         Add_request("wall.get", values, this.after_wallget)
 
 
-
 # !!!
-# FUNCTIONS UNDER THIS LINE ARE OBSOLETE AND WILL BE DELETED IN FUTURE RELEASES
+# CODE UNDER THIS LINE IS OBSOLETE AND WILL BE DELETED IN FUTURE RELEASES
 # !!!
 
 # def parse_wall(id):
