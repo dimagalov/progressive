@@ -166,7 +166,10 @@ class Attachments:
         self.amount = 0
         self.list_of_attachments = []
         
-        return ###############################
+        return  # TODO: repair attachments
+                # ASSIGNEE: anybody
+                # TODO: rewrite using execute callback model
+                # ASSIGNEE: vient
 
         for attachment in list_of_attachments:
             timestamp = get_current_timestamp()
