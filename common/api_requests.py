@@ -3,6 +3,7 @@
 __author__ = 'vient'
 
 from common.tools import vk_api_authorization
+from vk_api.vk_api import ApiError
 
 from collections import deque
 
@@ -35,8 +36,7 @@ class Add_request:
                 try:
                     resp = vk_api.method("execute", {"code": request}) 
                     break
-                # except ApiError:        Where is ApiError?
-                except:
+                except ApiError:
                     print('Too many requests per second. Trying again.')
             
             index = 0
