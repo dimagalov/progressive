@@ -9,6 +9,7 @@ from collections import deque
 
     
 class Add_request:
+    execute_limit = 25
     requests = deque()
     callbacks = deque()
     _execute_mutex = False  # Preventing stack overflow
@@ -26,11 +27,11 @@ class Add_request:
             current_requests = 0
             request = 'return ['
 
-            while len(this.requests) > 0 and current_requests < 25:
+            while len(this.requests) > 0 and current_requests < this.execute_limit:
                 now = this.requests.popleft()
                 request += 'API.{req[0]}({req[1]}), '.format(req=now)
                 current_requests += 1
-            request = (request[:-2] + '];').replace('\n', '').replace("'", '"')
+            request = (request[:-2] + '];').replace("'", '"')
             
             while True:
                 try:
@@ -51,5 +52,5 @@ class Add_request:
     def __init__(this, method, values, callback):
         this.requests.append([method, str(values)])
         this.callbacks.append(callback)
-        if this._execute_mutex == False and len(this.requests) >= 25:
+        if this._execute_mutex == False and len(this.requests) >= this.execute_limit:
             this.execute_requests()
