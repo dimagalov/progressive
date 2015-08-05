@@ -56,6 +56,8 @@ class Aggregator:
 
         this.last_time = int(time())
 
+        print('Aggregator started')
+
         while (1):
             for user in users:
                 Wall_parser(user, this.after_wallparser)

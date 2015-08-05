@@ -166,7 +166,7 @@ class Attachments:
         self.amount = 0
         self.list_of_attachments = []
         
-        # return              #  <<<----------------------------------------------------
+        return              #  <<<----------------------------------------------------
 
         for attachment in list_of_attachments:
             timestamp = get_current_timestamp()
