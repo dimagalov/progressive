@@ -25,7 +25,6 @@ class Wall_parser:
 
         this.callback(parsed_wall)
 
-
     def __init__(this, user, callback):
         this.user = user
         this.callback = callback
@@ -43,31 +42,31 @@ class Wall_parser:
 # !!!
 
 # def parse_wall(id):
-# 
+#
 #     ''' WARNING! parse_wall takes only id, not a screen name '''
-# 
+#
 #     vk_api = vk_api_authorization()
-#     
+#
 #     if vk_api == None:
 #         print('Something went wrong. Maybe wrong credentials?')
 #         exit(0)
-# 
+#
 #     values = {
 #         "owner_id": id,
 #         "filter": "owner"
 #     }
-# 
+#
 #     while (1):
 #         try:
 #             wall = vk_api.method("wall.get", values)
 #             break
 #         except ApiError:
 #             print ('Too many requests per second. Trying again.')
-# 
+#
 #     parsed_posts = [parse_post(post) for post in wall["items"]]
-# 
+#
 #     parsed_wall = Wall(owner_id=id, posts=parsed_posts,
 #                        timestamp=get_current_timestamp(),
 #                        link=get_wall_link(id))
-# 
+#
 #     return parsed_wall
