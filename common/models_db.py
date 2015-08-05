@@ -166,7 +166,7 @@ class Attachments:
         self.amount = 0
         self.list_of_attachments = []
         
-        return              #  <<<----------------------------------------------------
+        # return              #  <<<----------------------------------------------------
 
         for attachment in list_of_attachments:
             timestamp = get_current_timestamp()
@@ -224,9 +224,18 @@ class Attachments:
                 owner_id = audio["owner_id"]
                 duration = audio["duration"]
                 link = audio["url"]
-                lyrics_id = audio["lyrics_id"]
-                album_id = audio["album_id"]
-                genre_id = audio["genre_id"]
+                if "lyrics_id" in audio:
+                    lyrics_id = audio["lyrics_id"]
+                else:
+                    lyrics_id = -1
+                if "album_id" in audio:
+                    album_id = audio["album_id"]
+                else:
+                    album_id = -1
+                if "genre_id" in audio:
+                    genre_id = audio["genre_id"]
+                else:
+                    genre_id = -1
 
                 parsed_audio = Audio(
                     id=id, owner_id=owner_id, timestamp=timestamp,

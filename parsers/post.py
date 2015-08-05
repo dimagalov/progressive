@@ -7,6 +7,8 @@ from common.tools import get_current_timestamp
 from common.models_db import Attachments
 from database.query import add_post
 
+import traceback
+
 
 def get_post_id(post):
     try:
@@ -77,9 +79,13 @@ def get_post_attachments(post):
         list_of_attachments = post["attachments"]
         try:
             return Attachments(list_of_attachments=list_of_attachments)
-        except:
+        except Exception as e:
             print("Problem occured while parsing attachments")
-    except:
+            #print("Exception arguments:", e.args)
+            #print("Exception message:", e)
+            #traceback.print_stack()
+            print(traceback.format_exc())
+    except Exception:
         pass
 
 
