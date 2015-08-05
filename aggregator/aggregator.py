@@ -31,8 +31,7 @@ class Aggregator:
 
     def after_wallparser(this, wall):
         if this.log:
-            print('')
-
+            print('Processing ', wall.owner_id)
         posts = wall.posts
         for post in posts:
             if post.id not in this.used_posts and int(time()) - int(post.publication_date) < this.max_old_post:
@@ -59,8 +58,5 @@ class Aggregator:
 
         while (1):
             for user in users:
-                if log:
-                    print(user, end=' ')
-
                 Wall_parser(user, this.after_wallparser)
                 
