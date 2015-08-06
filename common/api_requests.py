@@ -15,7 +15,9 @@ class Add_request:
     _execute_mutex = False  # Preventing stack overflow
 
     def execute_requests(this):
-        this._execute_mutex = True
+        Add_request._execute_mutex = True
+
+        print('execute started')
 
         vk_api = vk_api_authorization()
         if vk_api is None:
@@ -45,10 +47,14 @@ class Add_request:
                 index += 1
                 current_requests -= 1
 
-        this._execute_mutex = False
+        print('execute finished')
+
+        Add_request._execute_mutex = False
 
     def __init__(this, method, values, callback):
-        this.requests.append([method, str(values)])
-        this.callbacks.append(callback)
-        if this._execute_mutex is False and len(this.requests) >= this.execute_limit:
-            this.execute_requests()
+        # print('Added request ', method, ', callback ', callback)
+        Add_request.requests.append([method, str(values)])
+        Add_request.callbacks.append(callback)
+        if Add_request._execute_mutex is False and \
+           len(Add_request.requests) >= Add_request.execute_limit:
+            Add_request.execute_requests(Add_request)

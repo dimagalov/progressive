@@ -4,7 +4,9 @@ __author__ = 'emil.guseynov'
 
 from common.tools import get_current_timestamp
 from common.tools import vk_api_authorization
+from common.api_requests import Add_request
 
+from collections import deque
 from sqlalchemy import Column, ForeignKey, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
 
@@ -118,55 +120,57 @@ class Link(Base):
 
 
 class Attachments:
-    def __init__(self, list_of_attachments=[]):
+    requested_attachments = deque()
+    initial_stage_done = False
+    amount = 0
+    total = 0
+    list_of_attachments = []
+    timestamp = 0
+    callback = 0
 
-        """
-        :param list_of_attachments: everything attached to the post
-               [list of instances of (Photo|Audio|Video|Link) classes]
-        """
+    def check_readiness(self):
+        self.amount += 1
+        if self.amount == self.total:
+            self.callback(self.list_of_attachments)
 
-        self.amount = 0
-        self.list_of_attachments = []
+    def after_photoGet(self, extended_info):
+        photo = self.requested_attachments.popleft()["photo"]
+        id = photo["id"]
+        owner_id = photo["owner_id"]
+        publication_date = photo["date"]
+        description = photo["text"]
+        link = "https://vk.com/photo{}_{}".format(str(owner_id), str(id))
+        if 'likes' in extended_info and 'count' in extended_info['likes']:
+            likes_amount = extended_info["likes"]["count"]
+        else:
+            likes_amount = -1
+
+        parsed_photo = Photo(
+            id=id, owner_id=owner_id, timestamp=self.timestamp,
+            publication_date=publication_date, description=description,
+            link=link, likes_amount=likes_amount)
+        self.list_of_attachments.append(parsed_photo)
+        self.check_readiness()
+
+    def __init__(self, list_of_attachments, callback):
+        self.callback = callback
+        self.total = len(list_of_attachments)
+        timestamp = get_current_timestamp()
 
         for attachment in list_of_attachments:
-            timestamp = get_current_timestamp()
-
             if attachment["type"] == "photo":
-                self.amount += 1
-
-                photo = attachment["photo"]
-
-                id = photo["id"]
-                owner_id = photo["owner_id"]
-                publication_date = photo["date"]
-                description = photo["text"]
-
-                link = "https://vk.com/photo{}_{}".format(
-                    str(owner_id), str(id))
-
-                vk_api = vk_api_authorization()
+                self.requested_attachments.append(attachment)
 
                 values = {
                     "photos": "{}_{}".format(
-                        str(owner_id), str(id)),
+                        str(attachment["photo"]["owner_id"]),
+                        str(attachment["photo"]["id"])),
                     "extended": 1
                 }
 
-                try:
-                    extended_info = vk_api.method("photos.getById", values)[0]
-                    likes_amount = extended_info["likes"]["count"]
-                except:
-                    likes_amount = -1
-
-                parsed_photo = Photo(
-                    id=id, owner_id=owner_id, timestamp=timestamp,
-                    publication_date=publication_date, description=description,
-                    link=link, likes_amount=likes_amount)
-
-                self.list_of_attachments.append(parsed_photo)
+                Add_request("photos.getById", values, self.after_photoGet)
 
             elif attachment["type"] == "posted_photo":
-                self.amount += 1
                 photo = attachment["posted_photo"]
 
                 id = photo["id"]
@@ -176,9 +180,9 @@ class Attachments:
                 parsed_photo = Photo(id=id, owner_id=owner_id, link=link)
 
                 self.list_of_attachments.append(parsed_photo)
+                self.check_readiness()
 
             elif attachment["type"] == "audio":
-                self.amount += 1
                 audio = attachment["audio"]
 
                 id = audio["id"]
@@ -206,9 +210,9 @@ class Attachments:
                     lyrics_id=lyrics_id, album_id=album_id, genre_id=genre_id)
 
                 self.list_of_attachments.append(parsed_audio)
+                self.check_readiness()
 
             elif attachment["type"] == "video":
-                self.amount += 1
                 video = attachment["video"]
 
                 id = video["id"]
@@ -230,28 +234,29 @@ class Attachments:
                     views_amount=views_amount, likes_amount=likes_amount)
 
                 self.list_of_attachments.append(parsed_video)
+                self.check_readiness()
 
             elif attachment["type"] == "link":
-                self.amount += 1
                 link = attachment["link"]
 
                 url = link["url"]
                 title = link["title"]
                 description = link["description"]
-
-                try:
+                
+                image_src = ''
+                if 'image_src' in link:
                     image_src = link["image_src"]
-                except:
-                    image_src = None
 
                 parsed_link = Link(url=url, title=title,
                                    description=description,
                                    image_src=image_src)
 
                 self.list_of_attachments.append(parsed_link)
+                self.check_readiness()
 
             else:
-                pass
+                self.amount -= 1
+        self.check_readiness()
 
     def get(self):
         return self.list_of_attachments
@@ -292,7 +297,8 @@ class Post(Base):
     reposts_amount = Column(Integer)
     post_type = Column(String)
     link = Column(String)
-    attachments = Attachments()
+    # attachments = Attachments()
+    attachments = []
 
     def __str__(self):
         return ("Post id: {}\n".format(str(self.id)) +
