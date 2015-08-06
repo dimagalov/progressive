@@ -140,7 +140,9 @@ class Attachments:
         publication_date = photo["date"]
         description = photo["text"]
         link = "https://vk.com/photo{}_{}".format(str(owner_id), str(id))
-        if 'likes' in extended_info and 'count' in extended_info['likes']:
+        if extended_info != False and \
+           'likes' in extended_info and \
+           'count' in extended_info['likes']:
             likes_amount = extended_info["likes"]["count"]
         else:
             likes_amount = -1

@@ -17,19 +17,20 @@ class Add_request:
     def execute_requests(this):
         Add_request._execute_mutex = True
 
-        print('execute started')
-
         vk_api = vk_api_authorization()
         if vk_api is None:
             print('Something went wrong. Maybe wrong credentials?')
             exit(0)
 
         while len(this.requests) > 0:
+            # print('execute started...', end=' ') # DEBUG PRINT
+
             current_requests = 0
             request = 'return ['
 
             while len(this.requests) > 0 and current_requests < this.execute_limit:
                 now = this.requests.popleft()
+                # print('Added request ', now[0], ', values ', now[1])    # DEBUG PRINT
                 request += 'API.{req[0]}({req[1]}), '.format(req=now)
                 current_requests += 1
             request = (request[:-2] + '];').replace("'", '"')
@@ -41,18 +42,20 @@ class Add_request:
                 except ApiError:
                     print('Too many requests per second. Trying again.')
 
+            # print('connected')  # DEBUG PRINT
+
             index = 0
             while current_requests > 0:
+                # print('.', end=' ')       # DEBUG PRINT
                 now = this.callbacks.popleft()(resp[index])
                 index += 1
                 current_requests -= 1
 
-        print('execute finished')
+            # print('execute finished')   # DEBUG PRINT
 
         Add_request._execute_mutex = False
 
     def __init__(this, method, values, callback):
-        # print('Added request ', method, ', callback ', callback)
         Add_request.requests.append([method, str(values)])
         Add_request.callbacks.append(callback)
         if Add_request._execute_mutex is False and \
