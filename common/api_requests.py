@@ -6,9 +6,12 @@ from common.tools import vk_api_authorization
 from vk_api.vk_api import ApiError
 
 from collections import deque
+import sys
 
 
 class Add_request:
+    _debug = False
+
     execute_limit = 25
     requests = deque()
     callbacks = deque()
@@ -23,14 +26,17 @@ class Add_request:
             exit(0)
 
         while len(this.requests) > 0:
-            # print('execute started...', end=' ') # DEBUG PRINT
+            if this._debug:
+                # print('execute started...', end=' ') # DEBUG PRINT
+                pass
 
             current_requests = 0
             request = 'return ['
 
             while len(this.requests) > 0 and current_requests < this.execute_limit:
                 now = this.requests.popleft()
-                # print('Added request ', now[0], ', values ', now[1])    # DEBUG PRINT
+                if this._debug:
+                    print('Added request ', now[0], ', values ', now[1])    # DEBUG PRINT
                 request += 'API.{req[0]}({req[1]}), '.format(req=now)
                 current_requests += 1
             request = (request[:-2] + '];').replace("'", '"')
@@ -41,17 +47,23 @@ class Add_request:
                     break
                 except ApiError:
                     print('Too many requests per second. Trying again.')
+                except Exception:
+                    sys.print_exc()
 
-            # print('connected')  # DEBUG PRINT
+            if this._debug:
+                # print('connected')  # DEBUG PRINT
+                pass
 
             index = 0
             while current_requests > 0:
-                # print('.', end=' ')       # DEBUG PRINT
+                if this._debug:
+                    print('.', end=' ')       # DEBUG PRINT
                 now = this.callbacks.popleft()(resp[index])
                 index += 1
                 current_requests -= 1
 
-            # print('execute finished')   # DEBUG PRINT
+            if this._debug:
+                print('\n---------------')   # DEBUG PRINT
 
         Add_request._execute_mutex = False
 

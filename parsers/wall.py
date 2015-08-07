@@ -32,6 +32,9 @@ class Wall_parser:
 
     def after_wallget(self, wall):
         # print(wall)
+        if not wall:
+            self.callback(False)
+            return
         self.posts_total = len(wall['items'])
 
         for post in wall['items']:
