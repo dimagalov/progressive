@@ -6,7 +6,7 @@ from common.tools import vk_api_authorization
 from vk_api.vk_api import ApiError
 
 from collections import deque
-import sys
+import traceback
 
 
 class Add_request:
@@ -20,10 +20,22 @@ class Add_request:
     def execute_requests(this):
         Add_request._execute_mutex = True
 
-        vk_api = vk_api_authorization()
-        if vk_api is None:
-            print('Something went wrong. Maybe wrong credentials?')
-            exit(0)
+        while True:
+            try:
+                # print('try', end=' ')       # DEBUG PRINT
+                vk_api = vk_api_authorization()
+                break
+                '''
+                if vk_api is None:
+                    print('Something went wrong. Maybe wrong credentials?')
+                    exit(0)
+                '''
+            except KeyboardInterrupt:
+                traceback.print_exc()
+                exit(0)
+            except:
+                pass
+        # print('\nsuccess!')                 # DEBUG PRINT
 
         while len(this.requests) > 0:
             if this._debug:
@@ -45,13 +57,17 @@ class Add_request:
                 try:
                     resp = vk_api.method("execute", {"code": request})
                     break
+                except KeyboardInterrupt:
+                    traceback.print_exc()
+                    exit(0)
                 except ApiError:
                     print('Too many requests per second. Trying again.')
-                except Exception:
-                    sys.print_exc()
+                except:
+                    # traceback.print_exc()
+                    pass
 
             if this._debug:
-                # print('connected')  # DEBUG PRINT
+                # print('connected')          # DEBUG PRINT
                 pass
 
             index = 0
@@ -63,7 +79,7 @@ class Add_request:
                 current_requests -= 1
 
             if this._debug:
-                print('\n---------------')   # DEBUG PRINT
+                print('\n---------------')    # DEBUG PRINT
 
         Add_request._execute_mutex = False
 
