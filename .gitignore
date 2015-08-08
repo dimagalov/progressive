@@ -1,0 +1,8 @@
+*.pyc
+*.wpu
+*.wpr
+*.DS_Store
+vk_config.json
+vk.db
+web/node_modules
+web/static/build
